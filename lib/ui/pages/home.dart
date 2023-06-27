@@ -1,0 +1,189 @@
+import 'package:expertsway/ui/pages/profile.dart';
+import 'package:expertsway/ui/widgets/overlay.dart';
+import 'package:expertsway/theme/box_icons_icons.dart';
+import 'package:expertsway/theme/config.dart';
+import 'package:expertsway/ui/pages/planner.dart';
+import 'package:expertsway/ui/pages/videos.dart';
+import 'package:expertsway/ui/widgets/section_header.dart';
+import 'package:expertsway/ui/widgets/top_bar.dart';
+import 'package:expertsway/ui/widgets/video_card.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' as material;
+
+class Home extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  final onMenuTap;
+  const Home({super.key, this.onMenuTap});
+  @override
+  HomeState createState() => HomeState();
+}
+
+class HomeState extends State<Home> {
+  int tabNo = 0;
+  late bool overlayVisible;
+  CupertinoTabController? controller;
+  @override
+  void initState() {
+    overlayVisible = false;
+    controller = CupertinoTabController(initialIndex: 0);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        CupertinoTabScaffold(
+          backgroundColor: Colors().secondColor(1),
+          controller: controller,
+          tabBar: CupertinoTabBar(
+            onTap: (value) {
+              setState(() {
+                tabNo = value;
+              });
+            },
+            activeColor: material.Colors.lightBlue,
+            inactiveColor: const Color(0xFFADADAD),
+            items: [
+              const BottomNavigationBarItem(icon: Icon(BoxIcons.bx_home_circle), label: "Home"),
+              const BottomNavigationBarItem(icon: Icon(BoxIcons.bx_calendar), label: "Planner"),
+              BottomNavigationBarItem(icon: Container()),
+              const BottomNavigationBarItem(icon: Icon(BoxIcons.bxs_videos), label: "Videos"),
+              const BottomNavigationBarItem(icon: Icon(BoxIcons.bx_stats), label: "Leaderboard"),
+            ],
+          ),
+          tabBuilder: (context, index) => (index == 0)
+              ? HomePage(
+                  onMenuTap: widget.onMenuTap,
+                )
+              : (index == 1)
+                  ? PlannerPage(
+                      onMenuTap: widget.onMenuTap,
+                    )
+                  : (index == 2)
+                      ? Container(
+                          color: CupertinoColors.activeOrange,
+                        )
+                      : (index == 3)
+                          ? VideosPage(
+                              onMenuTap: widget.onMenuTap,
+                            )
+                          : const Profile()
+        ),
+        Positioned(
+            bottom: 0,
+            child: GestureDetector(
+              child: const SizedBox(
+                height: 60,
+                width: 80,
+                child: Text(""),
+              ),
+              onTap: () {},
+            )),
+        overlayVisible ? OverlayWidget() : Container(),
+        Positioned(
+            bottom: 20,
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFFABDCFF),
+                      Color(0xFF0396FF),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [BoxShadow(blurRadius: 25, color: const Color(0xFF03A9F4).withOpacity(0.4), offset: const Offset(0, 4))],
+                  borderRadius: BorderRadius.circular(500)),
+              child: material.FloatingActionButton(
+                  elevation: 0,
+                  highlightElevation: 0,
+                  backgroundColor: material.Colors.transparent,
+                  child: overlayVisible ? const Icon(material.Icons.close) : const Icon(BoxIcons.bx_pencil),
+                  onPressed: () {
+                    setState(() {
+                      overlayVisible = !overlayVisible;
+                    });
+                  }),
+            )),
+      ],
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class HomePage extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  final onMenuTap;
+  HomePage({
+    Key? key,
+    required this.onMenuTap,
+  }) : super(key: key);
+
+  TextEditingController controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      backgroundColor: Colors().secondColor(1),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SafeArea(
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverFixedExtentList(delegate: SliverChildListDelegate.fixed([Container()]), itemExtent: MediaQuery.of(context).size.height * 0.32),
+                SliverToBoxAdapter(
+                  child: SectionHeader(
+                    text: 'Next Lessons',
+                    onPressed: () {},
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 245,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return const VideoCard(long: false);
+                      },
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SectionHeader(
+                    text: 'Recommended Courses',
+                    onPressed: () {},
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 245,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return const VideoCard(long: false);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 0,
+            child: TopBar(
+              controller: controller,
+              expanded: true,
+              onMenuTap: onMenuTap,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

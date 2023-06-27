@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "803787539667",
+    "project_id": "expertway-287ff",
+    "storage_bucket": "expertway-287ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803787539667:android:b3b33e0473ee7287d30026",
+        "android_client_info": {
+          "package_name": "com.herma.apps.expertsway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803787539667-ark02ln496c2o9thcp5b74tghpsrcs5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDjGd3Z-b-CIxCWaAqVn768kUMXw7RvXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803787539667-ark02ln496c2o9thcp5b74tghpsrcs5u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

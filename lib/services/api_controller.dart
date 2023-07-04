@@ -40,6 +40,28 @@ class ApiProvider {
     }
   }
 
+  Future<Lesson> getMyContributions() async {
+    var dio = Dio();
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    dio.options.connectTimeout = const Duration(seconds: 10);
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
+
+    Response response = await dio.get(AppUrl.myContributions,
+        data: jsonEncode(<String, dynamic>{"page_number": "1"}),
+        options: Options(
+          responseType: ResponseType.plain,
+        ));
+    if (response.statusCode == 200) {
+      final responseBody = response.data;
+      final lesson = lessonFromJson(responseBody);
+      return lesson;
+    } else {
+      throw Exception('Failed to get Help page');
+    }
+  }
   Future<Lesson> retrieveLessons(slug) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String lastUpdate = prefs.getString("last_update_$slug") ?? '2020-10-14 06:48:28';

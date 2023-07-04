@@ -18,4 +18,7 @@ class AppRoute {
   static const String splashscreen = '/splash';
   static const String changepassword = '/changepassword_page';
   static const String profile = '/profile';
+  static const String myContributions = '/my_contributions';
+
+
 }

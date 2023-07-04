@@ -23,6 +23,8 @@ class AppUrl {
   static var commentLikeDislike = '$baseUrl/wp/v2/comment/like_dislike';
   static var contributor = '$baseUrl/ds_lc/v1/lesson/add';
   static var changeProfilePicture = '$baseUrl/wp/v2/users/profile-picture';
+  static var myContributions = '$baseUrl/ds_lc/v1/lesson/my-contributions';
+
 }
 
 class Constant {

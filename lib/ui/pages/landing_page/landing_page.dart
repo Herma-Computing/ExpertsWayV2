@@ -127,6 +127,15 @@ class LandingPage extends GetView<LandingPageController> {
                       icon: BoxIcons.bx_bookmarks,
                       name: 'Bookmarks',
                     ),
+                    DrawerButton(
+                      onPress: () async {
+                        controller.scaffoldKey.currentState?.closeDrawer();
+                        Get.toNamed(AppRoute.myContributions);
+                      },
+                      theme: theme,
+                      icon: BoxIcons.bx_bookmarks,
+                      name: 'My Contributions',
+                    ),
                     const Divider(),
                     DrawerButton(
                       onPress: () async {

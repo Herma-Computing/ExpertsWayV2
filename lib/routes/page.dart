@@ -6,6 +6,7 @@ import '../auth/changepassword.dart';
 import '../auth/forgotpassword.dart';
 import '../auth/verification.dart';
 import '../ui/pages/contributions/content_submitted.dart';
+import '../ui/pages/contributions/my_contributions.dart';
 import '../ui/pages/contributions/terms_and_conditions.dart';
 import '../ui/pages/edit_lesson2.dart';
 import '../ui/pages/landing_page/controller.dart';
@@ -39,4 +40,7 @@ final pages = [
   GetPage(name: AppRoute.contentSubmitted, page: () => const ContentSubmitted()),
   GetPage(name: AppRoute.changepassword, page: () => const ChangePasswordClass()),
   GetPage(name: AppRoute.profile, page: () => const Profile()),
+
+  GetPage(name: AppRoute.myContributions, page: () => const MyContributions()),
+
 ];

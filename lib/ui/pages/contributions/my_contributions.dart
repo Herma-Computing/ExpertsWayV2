@@ -118,7 +118,7 @@ class MyContributionsState extends State<MyContributions> {
                         },
                       ),
                       Text(
-                        'Help',
+                        'My Contributions',
                         textAlign: TextAlign.end,
                         style: textTheme.displayLarge?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
                       ),

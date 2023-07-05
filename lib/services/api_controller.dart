@@ -50,10 +50,8 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
 
     Response response = await dio.get(AppUrl.myContributions,
-        data: jsonEncode(<String, dynamic>{"page_number": "1"}),
-        options: Options(
-          responseType: ResponseType.plain,
-        ));
+      queryParameters: {'page_number': 1},
+    );
     if (response.statusCode == 200) {
       final responseBody = response.data;
       final lesson = lessonFromJson(responseBody);

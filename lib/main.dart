@@ -27,7 +27,6 @@ Future main() async {
   final dontshowonboarding = sharedPreferennces.getBool('dontshowonboarding') ?? false;
   final logedin = checkuserlogin(sharedPreferennces);
 
-
   SharedPreferences.getInstance().then((prefs) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(
           RestartWidget(
@@ -64,14 +63,12 @@ class MyApp extends StatefulWidget {
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyAppState extends State<MyApp> {
- 
-
-  getValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return double
-    name = prefs.getString('name');
-    image = prefs.getString('image');
-  }
+  // getValue() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   //Return double
+  //   name = prefs.getString('name');
+  //   image = prefs.getString('image');
+  // }
 
   @override
   void initState() {
@@ -84,7 +81,7 @@ class MyAppState extends State<MyApp> {
       create: (context) => ThemeProvider(widget.isDark),
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
-         context.read<ThemeProvider>();
+        context.read<ThemeProvider>();
         return GetMaterialApp(
           navigatorKey: navigatorKey,
           localizationsDelegates: const [

@@ -10,7 +10,7 @@ import '../../../services/api_controller.dart';
 import '../course_detail/controller.dart';
 import '../home.dart';
 import '../lesson.dart';
-
+import 'package:expertsway/ui/pages/course_detail/controller.dart';
 class MyContributions extends StatefulWidget {
   const MyContributions({super.key});
 

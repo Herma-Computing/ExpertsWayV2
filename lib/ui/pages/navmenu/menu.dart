@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expertsway/theme/box_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:expertsway/utils/constants.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../profile.dart';

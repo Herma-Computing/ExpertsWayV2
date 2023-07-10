@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expertsway/routes/routing_constants.dart';
 import 'package:expertsway/ui/pages/course_detail/controller.dart';
+
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:expertsway/ui/pages/lesson.dart';

@@ -758,38 +758,50 @@ class DrawerHeader extends StatelessWidget {
         children: [
           GetBuilder<LandingPageController>(
             builder: (controller) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: controller.profileImage == null
-                    ? Image.asset(
-                        'assets/images/profile_placeholder.png',
-                        height: 60,
-                        width: 60,
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: controller.profileImage!,
-                        height: 60,
-                        width: 60,
-                        fit: BoxFit.cover,
-                      ),
+              return InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  Get.toNamed('/profile');
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: controller.profileImage == null
+                      ? Image.asset(
+                          'assets/images/profile_placeholder.png',
+                          height: 60,
+                          width: 60,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: controller.profileImage!,
+                          height: 60,
+                          width: 60,
+                          fit: BoxFit.cover,
+                        ),
+                ),
               );
             },
           ),
           const SizedBox(width: 10),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                controller.profileName ?? '',
-                style: textTheme.displayLarge?.copyWith(fontSize: 19, fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'Student',
-                style: textTheme.displayMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
-            ],
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              Get.toNamed('/profile');
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.profileName ?? '',
+                  style: textTheme.displayLarge?.copyWith(fontSize: 19, fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Student',
+                  style: textTheme.displayMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
           ),
         ],
       ),

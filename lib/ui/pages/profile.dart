@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:expertsway/ui/widgets/header.dart';
 import 'package:expertsway/utils/color.dart';
+import 'package:get/get.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -15,18 +16,15 @@ class _ProfileState extends State<Profile> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-              blurRadius: 10,
-              offset: Offset(1, 1),
-              color: Color.fromARGB(54, 104, 104, 104))
-        ],
+        boxShadow: const [BoxShadow(blurRadius: 10, offset: Offset(1, 1), color: Color.fromARGB(54, 104, 104, 104))],
         borderRadius: BorderRadius.circular(radius),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+          
+          },
           highlightColor: const Color.fromARGB(132, 135, 208, 245),
           splashColor: const Color.fromARGB(61, 231, 231, 231),
           borderRadius: BorderRadius.circular(radius),
@@ -34,9 +32,7 @@ class _ProfileState extends State<Profile> {
             leading: Container(
               width: 35,
               height: 35,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 233, 233, 233),
-                  borderRadius: BorderRadius.circular(radius)),
+              decoration: BoxDecoration(color: const Color.fromARGB(255, 233, 233, 233), borderRadius: BorderRadius.circular(radius)),
               child: Icon(
                 leading,
                 color: maincolor,
@@ -45,10 +41,7 @@ class _ProfileState extends State<Profile> {
             ),
             title: Text(
               title,
-              style: const TextStyle(
-                  color: Color.fromARGB(255, 137, 137, 137),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500),
+              style: const TextStyle(color: Color.fromARGB(255, 137, 137, 137), fontSize: 18, fontWeight: FontWeight.w500),
             ),
             trailing: Icon(
               trailing,
@@ -106,17 +99,11 @@ class _ProfileState extends State<Profile> {
                             children: const [
                               Text(
                                 "John Perol",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(221, 33, 33, 33)),
+                                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
                               ),
                               Text(
                                 "Student",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black38),
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.black38),
                               ),
                             ],
                           ),
@@ -129,9 +116,7 @@ class _ProfileState extends State<Profile> {
                             children: [
                               Container(
                                 width: 90,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
+                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
                                 height: 100,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -140,10 +125,7 @@ class _ProfileState extends State<Profile> {
                                     children: const [
                                       Text(
                                         "23",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 25,
-                                            color: grey1),
+                                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
                                       ),
                                       SizedBox(
                                         height: 5,
@@ -151,8 +133,7 @@ class _ProfileState extends State<Profile> {
                                       FittedBox(
                                         child: Text(
                                           "questions",
-                                          style: TextStyle(
-                                              fontSize: 18, color: grey2),
+                                          style: TextStyle(fontSize: 18, color: grey2),
                                         ),
                                       ),
                                     ],
@@ -162,9 +143,7 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 width: 90,
                                 height: 100,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
+                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
@@ -172,11 +151,7 @@ class _ProfileState extends State<Profile> {
                                     children: const [
                                       Text(
                                         "88",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 25,
-                                            color: Color.fromARGB(
-                                                202, 75, 75, 75)),
+                                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
                                       ),
                                       SizedBox(
                                         height: 5,
@@ -184,10 +159,7 @@ class _ProfileState extends State<Profile> {
                                       FittedBox(
                                         child: Text(
                                           "answer",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Color.fromARGB(
-                                                  255, 101, 101, 101)),
+                                          style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 101, 101, 101)),
                                         ),
                                       ),
                                     ],

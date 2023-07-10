@@ -177,7 +177,7 @@ class CourseDetailPage extends GetView<CourseDetailController> {
                               data: controller.courseData.description,
                               style: {
                                 "body": Style(
-                                  fontSize: const FontSize(14),
+                                  fontSize:  FontSize(14),
                                   fontWeight: FontWeight.w400,
                                   textAlign: TextAlign.justify,
                                 ),

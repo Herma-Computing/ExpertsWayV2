@@ -1,9 +1,15 @@
 import 'package:expertsway/theme/box_icons_icons.dart';
+import 'package:expertsway/ui/pages/course_detail/course_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
+import '../../../models/course.dart';
 import '../../../models/lesson.dart';
 import '../../../services/api_controller.dart';
+import '../course_detail/controller.dart';
+import '../home.dart';
+import '../lesson.dart';
 
 class MyContributions extends StatefulWidget {
   const MyContributions({super.key});
@@ -22,7 +28,6 @@ class MyContributionsState extends State<MyContributions> {
   }
 
   getValue() async {
-
     lesson = await ApiProvider().getMyContributions();
 
     setState(() {
@@ -30,7 +35,7 @@ class MyContributionsState extends State<MyContributions> {
     });
   }
 
-  Widget _container(String? title, String? description) {
+  Widget _container(String? title, String? description, LessonElement lesons) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Material(
       color: Colors.white,
@@ -56,33 +61,31 @@ class MyContributionsState extends State<MyContributions> {
                 size: 35,
               ),
             ),
-            child: ExpansionTile(
-              title: Row(
-                children: [
-                  const Icon(BoxIcons.bx_help_circle, color: Color.fromARGB(255, 193, 193, 194), size: 25),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    child: Text(
-                      title!,
-                      style: textTheme.bodyMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ],
+            child: ListTile(
+              onTap: () async {
+                  
+                // await Get.to(
+                //   () => LessonPage(
+                //     lessonData: controller.lessonData,
+                //     lesson: lesons, // this is LessonElement
+                //     contents: lessonContents,
+                //     courseData: controller.courseData,
+                //   ),
+                // );
+              },
+              title: Padding(
+                padding: const EdgeInsets.only(left: 100),
+                child: Text(
+                  title!,
+                  style: textTheme.bodyMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                ),
               ),
-              iconColor: const Color.fromARGB(255, 193, 193, 194),
-              collapsedIconColor: Colors.blue,
-              children: <Widget>[
-                ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    child: Html(
-                      data: description,
-                    ),
-                  ),
-                )
-              ],
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Html(
+                  data: description,
+                ),
+              ),
             ),
           )),
     );
@@ -141,10 +144,10 @@ class MyContributionsState extends State<MyContributions> {
                 Expanded(
                   child: Stack(
                     children: <Widget>[
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           Center(
                             child: Image(
                                 image: ResizeImage(
@@ -175,8 +178,11 @@ class MyContributionsState extends State<MyContributions> {
                         shrinkWrap: true,
                         itemCount: lesson.lessons.length,
                         itemBuilder: (context, index) {
-                          return _container(lesson.lessons[index]?.title.toString(),
-                              lesson.lessons[index]?.shortDescription.toString());
+                          return _container(
+                            lesson.lessons[index]?.title.toString(),
+                            lesson.lessons[index]?.shortDescription.toString(),
+                            lesson.lessons[index]!,
+                          );
                         },
                         separatorBuilder: (context, index) {
                           return const SizedBox(height: 20);

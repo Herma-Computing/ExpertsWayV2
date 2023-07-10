@@ -126,12 +126,12 @@ class Themes {
     primaryColor: const Color.fromARGB(0, 38, 50, 56),
     primarySwatch: Colors.blue,
     brightness: Brightness.dark,
-    accentColor: config.Colors().accentDarkColor(1),
+    // accentColor: config.Colors().accentDarkColor(1),
     focusColor: config.Colors().mainDarkColor(1),
     hintColor: config.Colors().secondDarkColor(1),
     cardColor: const Color.fromARGB(26, 255, 255, 255),
     backgroundColor: const Color.fromARGB(26, 255, 255, 255),
-    accentTextTheme: const TextTheme(headline6: TextStyle(fontFamily: "Red Hat Display")),
+    // accentTextTheme: const TextTheme(headline6: TextStyle(fontFamily: "Red Hat Display")),
     textTheme: TextTheme(
       button: const TextStyle(
         fontFamily: 'Red Hat Display',

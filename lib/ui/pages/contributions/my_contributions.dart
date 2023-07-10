@@ -144,10 +144,10 @@ class MyContributionsState extends State<MyContributions> {
                 Expanded(
                   child: Stack(
                     children: <Widget>[
-                      const Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        children: const [
                           Center(
                             child: Image(
                                 image: ResizeImage(

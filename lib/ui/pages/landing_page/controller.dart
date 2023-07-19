@@ -21,8 +21,9 @@ class LandingPageController extends GetxController {
   String? _profileImage = '';
 
   String? get profileImage => _profileImage;
+  String? get profileNames => profileName;
 
-  set profileImage(String? value) {
+  set profileImage(String? value) {   
     _profileImage = value;
     update();
   }
@@ -49,7 +50,7 @@ class LandingPageController extends GetxController {
     getCoursesFromDatabase();
     // read courses data from the API in case there's some updates
     getCoursesFromApi(savedCourseLastUpdateDate, savedPlLastUpdateDate);
-    getProfileDetails();
+     getProfileDetails();
   }
 
   Future getCoursesFromApi(String? savedCourseLastUpdateDate, String? savedPlLastUpdateDate) async {
@@ -187,7 +188,8 @@ class LandingPageController extends GetxController {
   // get  user profile
   Future getProfileDetails() async {
     final result = await SharedPreferences.getInstance();
-    profileName = result.getString('name');
-    _profileImage = result.getString('image');
+    profileName = result.getString('name') ?? "Besufikad";
+    _profileImage =  result.getString('image');
+    update();
   }
 }

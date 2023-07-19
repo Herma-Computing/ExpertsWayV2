@@ -518,6 +518,7 @@ class _Header extends StatelessWidget {
   final ThemeData theme;
   final LandingPageController controller;
   const _Header({required this.theme, required this.controller});
+  
 
   @override
   Widget build(BuildContext context) {

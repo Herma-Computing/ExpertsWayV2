@@ -15,270 +15,397 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Widget _container(IconData leading, String title, IconData trailing) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [BoxShadow(blurRadius: 10, offset: Offset(1, 1), color: Color.fromARGB(54, 104, 104, 104))],
-        borderRadius: BorderRadius.circular(radius),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {},
-          highlightColor: const Color.fromARGB(132, 135, 208, 245),
-          splashColor: const Color.fromARGB(61, 231, 231, 231),
-          borderRadius: BorderRadius.circular(radius),
-          child: ListTile(
-            leading: Container(
-              width: 35,
-              height: 35,
-              decoration: BoxDecoration(color: const Color.fromARGB(255, 233, 233, 233), borderRadius: BorderRadius.circular(radius)),
-              child: Icon(
-                leading,
-                color: maincolor,
-                size: 18,
-              ),
-            ),
-            title: Text(
-              title,
-              style: const TextStyle(color: Color.fromARGB(255, 137, 137, 137), fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            trailing: Icon(
-              trailing,
-              color: Colors.grey,
-              size: 17,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 40),
-          child: const Header(title: "Profile"),
-        ),
-
-        const SizedBox(
-          height: 30,
-        ),
-        // profile
-        CircleAvatar(
-          radius: 55,
-          backgroundColor: seccolor,
-          child: CircleAvatar(
-            radius: 53,
-            backgroundImage: AssetImage(
-              "${_controller.profileImage}",
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          elevation: 0,
+          backgroundColor: const Color.fromARGB(255, 216, 211, 211),
+          title: const Padding(
+            padding: EdgeInsets.all(55.0),
+            child: Text(
+              "User Profiles",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
-        const Text(
-          "Solomon Girma",
-          // "${_controller.profileNames}",
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              width: 90,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 224, 222, 222),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              height: 100,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 35,
+                  backgroundColor: seccolor,
+                  child: CircleAvatar(
+                    radius: 53,
+                    backgroundImage: AssetImage(
+                      "${_controller.profileImage}",
+                    ),
+                  ),
+                ),
+                const Text(
+                  "Solomon Girma",
+                  // "${_controller.profileNames}",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      "23",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
+                    Container(
+                      width: 90,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 238, 236, 236),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      height: 100,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "23",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                "questions Answered",
+                                style: TextStyle(fontSize: 18, color: grey2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    FittedBox(
-                      child: Text(
-                        "questions",
-                        style: TextStyle(fontSize: 18, color: grey2),
+                    Container(
+                      width: 90,
+                      height: 100,
+                      decoration: BoxDecoration(color: Color.fromARGB(255, 238, 236, 236), borderRadius: BorderRadius.circular(20)),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "88",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                "Course Completed",
+                                style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 101, 101, 101)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Container(
-              width: 90,
-              height: 100,
-              decoration: BoxDecoration(color: Color.fromARGB(255, 224, 222, 222), borderRadius: BorderRadius.circular(20)),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      "88",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
+                    Container(
+                      width: 90,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 238, 236, 236),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      height: 100,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "23",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                "Last Ranking",
+                                style: TextStyle(fontSize: 18, color: grey2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    FittedBox(
-                      child: Text(
-                        "answer",
-                        style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 101, 101, 101)),
+                    Container(
+                      width: 90,
+                      height: 100,
+                      decoration: BoxDecoration(color: Color.fromARGB(255, 238, 236, 236), borderRadius: BorderRadius.circular(20)),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "88",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                "Global Ranking",
+                                style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 101, 101, 101)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
+                const Padding(
+                  padding: EdgeInsets.all(18.0),
+                  child: Text(
+                    "Badges",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      // margin: const EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+                      height: 50,
+                      width: 145,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image(image: AssetImage("assets/images/js.png")),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("Javascript"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      // margin: const EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+                      height: 50,
+                      width: 145,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image(image: AssetImage("assets/images/python.png")),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("python"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      // margin: const EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+                      height: 50,
+                      width: 145,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image(image: AssetImage("assets/images/java.png")),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("Java"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      //margin: const EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+                      height: 50,
+                      width: 145,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Image(image: AssetImage("assets/images/go.png")),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("Go"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      // margin: const EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+                      height: 50,
+                      width: 145,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image(image: AssetImage("assets/images/cpp.png")),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("C++"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      // margin: const EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+                      height: 50,
+                      width: 145,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Image(
+                                image: AssetImage(
+                              "assets/images/mysql.png",
+                            )),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text("Mysql"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Badges",
-            style: TextStyle(fontSize: 20),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              height: 100,
-              width: 200,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 255, 255, 255)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.javascript,
-                        size: 40,
-                        color: Colors.yellow,
-                      ),
-                      label: Text(
-                        "Javascrip",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ))),
-            ),
-            SizedBox(
-              height: 100,
-              width: 200,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 255, 255, 255)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.javascript,
-                        size: 40,
-                        color: Colors.yellow,
-                      ),
-                      label: Text(
-                        "Javascrip",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ))),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              height: 100,
-              width: 200,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 255, 255, 255)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.javascript,
-                        size: 40,
-                        color: Colors.yellow,
-                      ),
-                      label: Text(
-                        "Javascrip",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ))),
-            ),
-            SizedBox(
-              height: 100,
-              width: 200,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 255, 255, 255)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.javascript,
-                        size: 40,
-                        color: Colors.yellow,
-                      ),
-                      label: Text(
-                        "Javascrip",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ))),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              height: 100,
-              width: 200,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 255, 255, 255)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.javascript,
-                        size: 40,
-                        color: Colors.yellow,
-                      ),
-                      label: Text(
-                        "Javascrip",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ))),
-            ),
-            SizedBox(
-              height: 100,
-              width: 200,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 255, 255, 255)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.javascript,
-                        size: 40,
-                        color: Colors.yellow,
-                      ),
-                      label: Text(
-                        "Javascrip",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ))),
-            ),
-          ],
-        ),
-      ],
-    ));
+        ));
   }
 }

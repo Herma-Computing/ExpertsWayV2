@@ -24,7 +24,7 @@ class UserPreferences {
   static Future<User> getuser(String image, String name) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? name = prefs.getString("name");
-    // Image? image = prefs.getString("image");
+     String? image = prefs.getString("image");
     return User(name: name, image: image);
   }
 

@@ -5,7 +5,7 @@ import 'package:expertsway/ui/widgets/header.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:get/get.dart';
 
-LandingPageController _controller = LandingPageController();
+import '../../api/shared_preference/shared_preference.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -15,7 +15,15 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  // final  UserPreferences prefs=UserPreferences();
+
+  LandingPageController _controller = LandingPageController();
   @override
+  void initState() {
+    _controller.getProfileDetails();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -42,15 +50,17 @@ class _ProfileState extends State<Profile> {
                   backgroundColor: seccolor,
                   child: CircleAvatar(
                     radius: 53,
-                    backgroundImage: AssetImage(
-                      "${_controller.profileImage}",
+                    backgroundImage: NetworkImage(
+                      _controller.profileImage,
                     ),
                   ),
                 ),
-                const Text(
-                  "Solomon Girma",
-                  // "${_controller.profileNames}",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    _controller.profileNames,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

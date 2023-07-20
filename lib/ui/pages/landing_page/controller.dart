@@ -7,6 +7,9 @@ import 'package:expertsway/models/course.dart';
 import 'package:expertsway/services/api_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../api/shared_preference/shared_preference.dart';
+import '../../../models/user.dart';
+
 class LandingPageController extends GetxController {
   RxList<CourseElement> allCourses = <CourseElement>[].obs;
   RxList<CourseElement> coursesToDisplay = <CourseElement>[].obs;
@@ -17,13 +20,14 @@ class LandingPageController extends GetxController {
   RxList<CourseElement> startedCourses = <CourseElement>[].obs; // these are the courses the user has started learning
   RxList<CourseProgressElement> progressList = <CourseProgressElement>[].obs;
 
-  String? profileName = '';
-  String? _profileImage = '';
 
-  String? get profileImage => _profileImage;
-  String? get profileNames => profileName;
+  String profileName = '';
+  String _profileImage = '';
 
-  set profileImage(String? value) {   
+  String get profileImage => _profileImage;
+  String get profileNames => profileName;
+
+  set profileImage(String value) {   
     _profileImage = value;
     update();
   }
@@ -187,9 +191,15 @@ class LandingPageController extends GetxController {
 
   // get  user profile
   Future getProfileDetails() async {
-    final result = await SharedPreferences.getInstance();
-    profileName = result.getString('name') ?? "Besufikad";
-    _profileImage =  result.getString('image');
+
+    
+   
+  User result = await UserPreferences.getuser('image', 'name');
+    profileName = result.name!;
+    _profileImage =  result.image!;
+    print("pro$profileName");
+    print("im$_profileImage");
     update();
+    
   }
 }

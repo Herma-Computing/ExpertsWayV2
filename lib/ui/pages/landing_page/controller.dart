@@ -197,8 +197,7 @@ class LandingPageController extends GetxController {
   User result = await UserPreferences.getuser('image', 'name');
     profileName = result.name!;
     _profileImage =  result.image!;
-    print("pro$profileName");
-    print("im$_profileImage");
+  
     update();
     
   }

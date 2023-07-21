@@ -17,10 +17,10 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   // final  UserPreferences prefs=UserPreferences();
 
-  LandingPageController _controller = LandingPageController();
+  final LandingPageController controller = Get.put(LandingPageController());
   @override
   void initState() {
-    _controller.getProfileDetails();
+    controller.getProfileDetails();
     super.initState();
   }
 
@@ -51,15 +51,15 @@ class _ProfileState extends State<Profile> {
                   child: CircleAvatar(
                     radius: 53,
                     backgroundImage: NetworkImage(
-                      _controller.profileImage,
+                      controller.profileImage,
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    _controller.profileNames,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
+                    controller.profileNames,
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color.fromARGB(221, 33, 33, 33)),
                   ),
                 ),
                 const SizedBox(

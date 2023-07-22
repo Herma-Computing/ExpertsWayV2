@@ -1,11 +1,7 @@
 import 'package:expertsway/ui/pages/landing_page/controller.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:expertsway/ui/widgets/header.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:get/get.dart';
-
-import '../../api/shared_preference/shared_preference.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -76,11 +72,11 @@ class _ProfileState extends State<Profile> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       height: 100,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "23",
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
@@ -102,11 +98,11 @@ class _ProfileState extends State<Profile> {
                       width: 90,
                       height: 100,
                       decoration: BoxDecoration(color: Color.fromARGB(255, 238, 236, 236), borderRadius: BorderRadius.circular(20)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "88",
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
@@ -126,7 +122,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
@@ -136,15 +132,15 @@ class _ProfileState extends State<Profile> {
                     Container(
                       width: 90,
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 238, 236, 236),
+                        color: const Color.fromARGB(255, 238, 236, 236),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       height: 100,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "23",
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
@@ -166,11 +162,11 @@ class _ProfileState extends State<Profile> {
                       width: 90,
                       height: 100,
                       decoration: BoxDecoration(color: Color.fromARGB(255, 238, 236, 236), borderRadius: BorderRadius.circular(20)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "88",
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
@@ -216,13 +212,13 @@ class _ProfileState extends State<Profile> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Image(image: AssetImage("assets/images/js.png")),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -247,13 +243,13 @@ class _ProfileState extends State<Profile> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Image(image: AssetImage("assets/images/python.png")),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -264,7 +260,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Row(
@@ -286,13 +282,13 @@ class _ProfileState extends State<Profile> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Image(image: AssetImage("assets/images/java.png")),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -321,9 +317,9 @@ class _ProfileState extends State<Profile> {
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Image(image: AssetImage("assets/images/go.png")),
@@ -337,7 +333,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Row(
@@ -359,13 +355,13 @@ class _ProfileState extends State<Profile> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Image(image: AssetImage("assets/images/cpp.png")),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -390,13 +386,13 @@ class _ProfileState extends State<Profile> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Image(

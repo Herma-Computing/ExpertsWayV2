@@ -503,4 +503,37 @@ class ApiProvider {
       return message!;
     }
   }
+  
+  Future  ClearCourseProgress() async {
+   
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("Quiztoken",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Rhc2hlbmNvbi5jb20vdGVzdCIsImlhdCI6MTY4NDU2NjU2NCwibmJmIjoxNjg0NTY2NTY0LCJleHAiOjE3NDc2Mzg1NjQsImRhdGEiOnsidXNlciI6eyJpZCI6IjkwIn19fQ.jetHRXCNxUV75Ql9CUYI6rxlnqc3PECg29UCKx7qN2Y");
+
+    var dio = Dio();
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("Quiztoken")}";
+    try {
+      Response response = await dio.post(
+        "https://dashencon.com/test/api/ds_lc/v1/courses/clear-history/python", 
+       data: {}
+      );
+
+      if (response.statusCode == 200) {
+        // If the server did return a 201 CREATED response,
+        // then parse the JSON.
+        print('CoureseProgressCleared: ${response.data}');
+        
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        print("coded${response.statusCode}");
+        throw Exception('Failed to create album.');
+      }
+    } catch (e) {
+      print('Error creating user: $e');
+    }
+
+  }
 }

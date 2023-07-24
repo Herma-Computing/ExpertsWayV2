@@ -264,4 +264,5 @@ class CourseDetailController extends GetxController {
     applyProgressOnLessons();
     lessonData.refresh();
   }
+  
 }

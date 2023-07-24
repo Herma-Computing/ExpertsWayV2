@@ -9,12 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:configurable_expansion_tile_null_safety/configurable_expansion_tile_null_safety.dart';
 import 'package:provider/provider.dart';
+import '../../../services/api_controller.dart';
 import '../../../theme/theme.dart';
 
 import '../../../db/database_helper.dart' hide courseProgress;
 import '../../../models/lesson.dart';
 import '../../../utils/color.dart';
-
+ApiProvider courseController=ApiProvider();
 class CourseDetailPage extends GetView<CourseDetailController> {
   const CourseDetailPage({
     Key? key,
@@ -130,29 +131,51 @@ class CourseDetailPage extends GetView<CourseDetailController> {
                                   onSelected: (value) {},
                                   itemBuilder: (context) => [
                                     PopupMenuItem(
-                                      child: ListTile(
-                                        onTap: () {
-                                          String slug = controller.courseData.slug;
-                                          final MyController myController = Get.put(MyController());
-                                          myController.courseSlug.value = slug;
-                                          Navigator.pop(context);
-                                          Get.toNamed(AppRoute.editLesson);
-                                          // Get.toNamed(AppRoute.termsAndConditions);
-                                          // Get.toNamed(AppRoute.contentSubmitted);
-                                        },
-                                        contentPadding: EdgeInsets.zero,
-                                        leading: const Icon(
-                                          Icons.edit,
-                                          color: Colors.blue,
-                                        ),
-                                        title: Text(
-                                          'Contribute Lesson',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: themeProvider.currentTheme == ThemeData.light()
-                                                  ? const Color.fromARGB(255, 25, 32, 36)
-                                                  : Colors.white),
-                                        ),
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            onTap: () {
+                                              String slug = controller.courseData.slug;
+                                              final MyController myController = Get.put(MyController());
+                                              myController.courseSlug.value = slug;
+                                              Navigator.pop(context);
+                                              Get.toNamed(AppRoute.editLesson);
+                                              // Get.toNamed(AppRoute.termsAndConditions);
+                                              // Get.toNamed(AppRoute.contentSubmitted);
+                                            },
+                                            contentPadding: EdgeInsets.zero,
+                                            leading: const Icon(
+                                              Icons.edit,
+                                              color: Colors.blue,
+                                            ),
+                                            title: Text(
+                                              'Contribute Lesson',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: themeProvider.currentTheme == ThemeData.light()
+                                                      ? const Color.fromARGB(255, 25, 32, 36)
+                                                      : Colors.white),
+                                            ),
+                                          ),
+                                          ListTile(
+                                            onTap: () {
+                                          courseController.ClearCourseProgress();
+                                            },
+                                            contentPadding: EdgeInsets.zero,
+                                            leading: const Icon(
+                                              Icons.clear,
+                                              color: Colors.blue,
+                                            ),
+                                            title: Text(
+                                              'Clear Course Progress',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: themeProvider.currentTheme == ThemeData.light()
+                                                      ? const Color.fromARGB(255, 25, 32, 36)
+                                                      : Colors.white),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -178,7 +201,7 @@ class CourseDetailPage extends GetView<CourseDetailController> {
                               data: controller.courseData.description,
                               style: {
                                 "body": Style(
-                                  fontSize:  FontSize(14),
+                                  fontSize: FontSize(14),
                                   fontWeight: FontWeight.w400,
                                   textAlign: TextAlign.justify,
                                 ),

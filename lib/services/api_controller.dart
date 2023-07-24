@@ -6,6 +6,7 @@ import 'package:expertsway/models/course.dart';
 import 'package:expertsway/models/lesson.dart';
 import 'package:expertsway/models/programming_language.dart';
 import 'package:expertsway/utils/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/shared_preference/shared_preference.dart';
@@ -49,7 +50,8 @@ class ApiProvider {
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
 
-    Response response = await dio.get(AppUrl.myContributions,
+    Response response = await dio.get(
+      AppUrl.myContributions,
       queryParameters: {'page_number': 1},
     );
     if (response.statusCode == 200) {
@@ -60,6 +62,7 @@ class ApiProvider {
       throw Exception('Failed to get Help page');
     }
   }
+
   Future<Lesson> retrieveLessons(slug) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String lastUpdate = prefs.getString("last_update_$slug") ?? '2020-10-14 06:48:28';
@@ -503,26 +506,20 @@ class ApiProvider {
       return message!;
     }
   }
-  
-  Future  ClearCourseProgress() async {
-   
 
+  Future ClearCourseProgress() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
- 
+
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("Quiztoken")}";
     try {
-      Response response = await dio.post(
-        "${AppUrl.ClearCourseProgress}", 
-       data: {}
-      );
+      Response response = await dio.post("${AppUrl.ClearCourseProgress}", data: {});
 
       if (response.statusCode == 200) {
         // If the server did return a 201 CREATED response,
         // then parse the JSON.
         print('CoureseProgressCleared: ${response.data}');
-        
       } else {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
@@ -532,6 +529,43 @@ class ApiProvider {
     } catch (e) {
       print('Error creating user: $e');
     }
+  }
 
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("yes"),
+      onPressed: () {
+        ClearCourseProgress();
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Warning"),
+      content: Text(
+        "Are you sure to clear your progress?",
+        style: TextStyle(color: Colors.black),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

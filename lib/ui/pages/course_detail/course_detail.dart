@@ -159,7 +159,8 @@ class CourseDetailPage extends GetView<CourseDetailController> {
                                           ),
                                           ListTile(
                                             onTap: () {
-                                          courseController.ClearCourseProgress();
+                                         courseController.showAlertDialog(context);
+                                         
                                             },
                                             contentPadding: EdgeInsets.zero,
                                             leading: const Icon(

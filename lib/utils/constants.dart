@@ -28,6 +28,7 @@ class AppUrl {
   static var contributor = '$baseUrl/ds_lc/v1/lesson/add';
   static var changeProfilePicture = '$baseUrl/wp/v2/users/profile-picture';
   static var myContributions = '$baseUrl/ds_lc/v1/lesson/my-contributions';
+  static var ClearCourseProgress = '$baseUrl/ds_lc/v1/courses/clear-history/python';
 
 }
 

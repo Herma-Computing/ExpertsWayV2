@@ -508,15 +508,13 @@ class ApiProvider {
    
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("Quiztoken",
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Rhc2hlbmNvbi5jb20vdGVzdCIsImlhdCI6MTY4NDU2NjU2NCwibmJmIjoxNjg0NTY2NTY0LCJleHAiOjE3NDc2Mzg1NjQsImRhdGEiOnsidXNlciI6eyJpZCI6IjkwIn19fQ.jetHRXCNxUV75Ql9CUYI6rxlnqc3PECg29UCKx7qN2Y");
-
+ 
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("Quiztoken")}";
     try {
       Response response = await dio.post(
-        "https://dashencon.com/test/api/ds_lc/v1/courses/clear-history/python", 
+        "${AppUrl.ClearCourseProgress}", 
        data: {}
       );
 

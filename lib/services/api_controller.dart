@@ -511,7 +511,7 @@ class ApiProvider {
  
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("Quiztoken")}";
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.post(
         "${AppUrl.ClearCourseProgress}", 

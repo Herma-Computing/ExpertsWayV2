@@ -11,6 +11,7 @@ import '../ui/pages/contributions/terms_and_conditions.dart';
 import '../ui/pages/edit_lesson2.dart';
 import '../ui/pages/landing_page/controller.dart';
 import '../ui/pages/landing_page/landing_page.dart';
+import '../ui/pages/other_profiles.dart';
 import '../ui/pages/profile.dart';
 import '../ui/pages/programming_language/controller.dart';
 import '../ui/pages/programming_language/programing_options.dart';
@@ -42,5 +43,7 @@ final pages = [
   GetPage(name: AppRoute.profile, page: () => const Profile()),
 
   GetPage(name: AppRoute.myContributions, page: () => const MyContributions()),
+  
+  GetPage(name: AppRoute.otherProfilePage, page: () => const OtherProfile()),
 
 ];

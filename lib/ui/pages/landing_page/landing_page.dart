@@ -85,6 +85,15 @@ class LandingPage extends GetView<LandingPageController> {
                     DrawerButton(
                       onPress: () {
                         controller.scaffoldKey.currentState?.closeDrawer();
+                        Get.toNamed(AppRoute.otherProfilePage);
+                      },
+                      theme: theme,
+                      icon: Icons.group_add,
+                      name: 'other Profiles',
+                    ),
+                    DrawerButton(
+                      onPress: () {
+                        controller.scaffoldKey.currentState?.closeDrawer();
                         Get.toNamed(AppRoute.landingPage);
                       },
                       theme: theme,
@@ -518,7 +527,6 @@ class _Header extends StatelessWidget {
   final ThemeData theme;
   final LandingPageController controller;
   const _Header({required this.theme, required this.controller});
-  
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class AppUrl {
   static var username = 'esubalew11@gmail.com';
   static var password = '105672864563817565';
@@ -32,6 +34,40 @@ class AppUrl {
 
 }
 
+List <Color>ConstantColors=[
+  Color.fromARGB(255, 241, 146, 4),
+Color.fromARGB(255, 7, 143, 227),
+ Color.fromARGB(157, 28, 98, 141),
+Color.fromARGB(255, 192, 192, 192),
+Color.fromARGB(201, 167, 45, 45),
+ Color.fromARGB(255, 235, 20, 170),
+  Color.fromARGB(157, 28, 98, 141),
+  Color.fromARGB(255, 192, 192, 192),
+  Color.fromARGB(201, 167, 45, 45),
+  Color.fromARGB(255, 235, 20, 170),
+   Color.fromARGB(255, 241, 146, 4),
+  Color.fromARGB(255, 7, 143, 227),
+  Color.fromARGB(157, 28, 98, 141),
+  Color.fromARGB(255, 192, 192, 192),
+  Color.fromARGB(201, 167, 45, 45),
+  Color.fromARGB(255, 235, 20, 170),
+  Color.fromARGB(157, 28, 98, 141),
+  Color.fromARGB(255, 192, 192, 192),
+  Color.fromARGB(201, 167, 45, 45),
+  Color.fromARGB(255, 235, 20, 170),
+   Color.fromARGB(255, 241, 146, 4),
+  Color.fromARGB(255, 7, 143, 227),
+  Color.fromARGB(157, 28, 98, 141),
+  Color.fromARGB(255, 192, 192, 192),
+  Color.fromARGB(201, 167, 45, 45),
+  Color.fromARGB(255, 235, 20, 170),
+  Color.fromARGB(157, 28, 98, 141),
+  Color.fromARGB(255, 192, 192, 192),
+  Color.fromARGB(201, 167, 45, 45),
+  Color.fromARGB(255, 235, 20, 170),
+
+
+];
 class Constant {
   static const imagePlaceholder = 'https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png';
 }

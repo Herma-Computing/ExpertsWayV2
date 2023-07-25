@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/shared_preference/shared_preference.dart';
 import '../models/contributor_lesson.dart';
+import '../models/other_profile_model.dart';
 import '../models/profile.dart';
 
 class ApiProvider {
@@ -567,5 +568,29 @@ class ApiProvider {
         return alert;
       },
     );
+  }
+
+  Future fetchOtherProfileInformation() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var dio = Dio();
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
+    try {
+      Response response = await dio.get(AppUrl.fetchOtherProfileInformation);
+  
+
+      if (response.statusCode == 200) {
+        
+       return OtherProfileModels.fromJson(response.data);
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        print("coded${response.statusCode}");
+        throw Exception('Failed to create album.');
+      }
+    } catch (e) {
+      print('Error creating user: $e');
+    }
   }
 }

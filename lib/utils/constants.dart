@@ -4,10 +4,6 @@ class AppUrl {
   static var username = 'esubalew11@gmail.com';
   static var password = '105672864563817565';
   static var loginWith = 'google';
-
-
-
-  
   static var baseUrl = 'https://dashencon.com/test/api';
   static var courseUrl = '$baseUrl/ds_lc/v1/courses';
   static var lessonUrl = '$baseUrl/ds_lc/v1/lesson-json';
@@ -31,43 +27,10 @@ class AppUrl {
   static var changeProfilePicture = '$baseUrl/wp/v2/users/profile-picture';
   static var myContributions = '$baseUrl/ds_lc/v1/lesson/my-contributions';
   static var ClearCourseProgress = '$baseUrl/ds_lc/v1/courses/clear-history/python';
+  static var fetchOtherProfileInformation = '$baseUrl/wp/v2/users/profile/esubalew';
 
 }
 
-List <Color>ConstantColors=[
-  Color.fromARGB(255, 241, 146, 4),
-Color.fromARGB(255, 7, 143, 227),
- Color.fromARGB(157, 28, 98, 141),
-Color.fromARGB(255, 192, 192, 192),
-Color.fromARGB(201, 167, 45, 45),
- Color.fromARGB(255, 235, 20, 170),
-  Color.fromARGB(157, 28, 98, 141),
-  Color.fromARGB(255, 192, 192, 192),
-  Color.fromARGB(201, 167, 45, 45),
-  Color.fromARGB(255, 235, 20, 170),
-   Color.fromARGB(255, 241, 146, 4),
-  Color.fromARGB(255, 7, 143, 227),
-  Color.fromARGB(157, 28, 98, 141),
-  Color.fromARGB(255, 192, 192, 192),
-  Color.fromARGB(201, 167, 45, 45),
-  Color.fromARGB(255, 235, 20, 170),
-  Color.fromARGB(157, 28, 98, 141),
-  Color.fromARGB(255, 192, 192, 192),
-  Color.fromARGB(201, 167, 45, 45),
-  Color.fromARGB(255, 235, 20, 170),
-   Color.fromARGB(255, 241, 146, 4),
-  Color.fromARGB(255, 7, 143, 227),
-  Color.fromARGB(157, 28, 98, 141),
-  Color.fromARGB(255, 192, 192, 192),
-  Color.fromARGB(201, 167, 45, 45),
-  Color.fromARGB(255, 235, 20, 170),
-  Color.fromARGB(157, 28, 98, 141),
-  Color.fromARGB(255, 192, 192, 192),
-  Color.fromARGB(201, 167, 45, 45),
-  Color.fromARGB(255, 235, 20, 170),
-
-
-];
 class Constant {
   static const imagePlaceholder = 'https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png';
 }

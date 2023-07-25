@@ -17,9 +17,11 @@ import 'package:expertsway/ui/pages/notification.dart' as notification_page;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../models/other_profile_model.dart';
+import '../../../services/api_controller.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/color.dart';
-
+ApiProvider provider= ApiProvider();
 class LandingPage extends GetView<LandingPageController> {
   const LandingPage({super.key});
 
@@ -83,18 +85,29 @@ class LandingPage extends GetView<LandingPageController> {
                   children: [
                     DrawerHeader(controller, theme),
                     DrawerButton(
-                      onPress: () {
+                      onPress: ()async {
                         controller.scaffoldKey.currentState?.closeDrawer();
-                        Get.toNamed(AppRoute.otherProfilePage);
+                 OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+                       Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                          'firstName': value.first_name,
+                          "lastName": value.last_name,
+                          "isFollowing": value.is_following,
+                          "ocupation": value.occupation,
+                          "avatarUrl": value.avatar_url,
+                          "birthDate": value.birthdate,
+                          "country": value.country,
+                          "preferedLanguges": value.perfered_languages,
+                        });
                       },
                       theme: theme,
                       icon: Icons.group_add,
                       name: 'other Profiles',
                     ),
                     DrawerButton(
-                      onPress: () {
+                      onPress: () async{
                         controller.scaffoldKey.currentState?.closeDrawer();
-                        Get.toNamed(AppRoute.landingPage);
+                     
+                       
                       },
                       theme: theme,
                       icon: BoxIcons.bx_home,

@@ -67,12 +67,15 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   image_picker: ^0.8.7+5
   flutter_html: ^3.0.0-beta.1
+  
+ 
 
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+ 
 flutter_icons:
   android: true
   ios: true

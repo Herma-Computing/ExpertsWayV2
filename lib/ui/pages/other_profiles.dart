@@ -72,8 +72,11 @@ class _OtherProfileState extends State<OtherProfile> {
                       ),
                       ElevatedButton(
                           onPressed: () {},
-                          child: Text(
-                            "${Get.arguments["isFollowing"]}",
+                          child:Get.arguments["isFollowing"]==1? Text(
+                            "following",
+                            style: const TextStyle(color: Colors.black),
+                          ): Text(
+                            "follow",
                             style: const TextStyle(color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(

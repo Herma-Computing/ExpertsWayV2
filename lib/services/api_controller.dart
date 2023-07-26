@@ -581,7 +581,7 @@ class ApiProvider {
   
 
       if (response.statusCode == 200) {
-        
+        print("tokens${prefs.getString("token")}");
        return OtherProfileModels.fromJson(response.data);
       } else {
         // If the server did not return a 201 CREATED response,

@@ -26,7 +26,7 @@ class ContentSubmitted extends StatelessWidget {
               const SizedBox(height: 40,),
               const Text("Content Submitted Successfully",textAlign: TextAlign.center,style:TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.w600,),),
               const SizedBox(height: 20,),
-              const Text("Our experts will examine your content. An email will be delivered to you shortly. Thank you",textAlign: TextAlign.center,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w400),),
+              const Text("Our experts will examine your content. An email will be delivered to you shortly.",textAlign: TextAlign.center,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w400),),
               const Text("\nThank you",textAlign: TextAlign.center,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w400),),
               const SizedBox(height: 98,),
               Container(

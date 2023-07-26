@@ -16,9 +16,10 @@ class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
 
   final LandingPageController controller = Get.put(LandingPageController());
-  bool isfollowing=false;
+ late  bool isfollowing;
   @override
   void initState() {
+    Get.arguments["isFollowing"]==1?isfollowing=true:isfollowing=false;
     controller.getProfileDetails();
     super.initState();
   }
@@ -75,7 +76,7 @@ class _OtherProfileState extends State<OtherProfile> {
                       ),
                       ElevatedButton(
                           onPressed: () { //follow
-                            if(Get.arguments["isFollowing"]==1){
+                            if(isfollowing==true){
                             provider.unfollow();
                         setState(() {
                           isfollowing=false;
@@ -89,15 +90,15 @@ class _OtherProfileState extends State<OtherProfile> {
 
                             }
                           },
-                          child:Get.arguments["isFollowing"]==1 && isfollowing==true? const Text(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                          ),
+                          child: isfollowing==true? const Text(
                             "following",
                             style: TextStyle(color: Colors.black),
                           ): const Text(
                             "follow",
                             style: TextStyle(color: Colors.black),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
                           )),
                     ],
                   ),

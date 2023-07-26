@@ -2,7 +2,8 @@ import 'package:expertsway/ui/pages/landing_page/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:get/get.dart';
-import 'package:expertsway/models/auth_model.dart';
+
+import '../../../services/api_controller.dart';
 
 class OtherProfile extends StatefulWidget {
   const OtherProfile({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
 
   final LandingPageController controller = Get.put(LandingPageController());
+  bool isfollowing=false;
   @override
   void initState() {
     controller.getProfileDetails();
@@ -22,6 +24,7 @@ class _OtherProfileState extends State<OtherProfile> {
   }
 
   Widget build(BuildContext context) {
+    ApiProvider provider= ApiProvider();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -71,13 +74,27 @@ class _OtherProfileState extends State<OtherProfile> {
                         child: Icon(Icons.check_circle),
                       ),
                       ElevatedButton(
-                          onPressed: () {},
-                          child:Get.arguments["isFollowing"]==1? Text(
+                          onPressed: () { //follow
+                            if(Get.arguments["isFollowing"]==1){
+                            provider.unfollow();
+                        setState(() {
+                          isfollowing=false;
+                        });
+
+                            }else{
+                               provider.follow();
+                               setState(() {
+                                 isfollowing=true;
+                               });
+
+                            }
+                          },
+                          child:Get.arguments["isFollowing"]==1 && isfollowing==true? const Text(
                             "following",
-                            style: const TextStyle(color: Colors.black),
-                          ): Text(
+                            style: TextStyle(color: Colors.black),
+                          ): const Text(
                             "follow",
-                            style: const TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,

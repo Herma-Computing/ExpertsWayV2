@@ -2,10 +2,6 @@ import 'dart:ui';
 
 class AppUrl {
 
-
-
-
-  
   static var username = 'esubalew11@gmail.com';
   static var password = '105672864563817565';
   static var loginWith = 'google';
@@ -33,6 +29,8 @@ class AppUrl {
   static var myContributions = '$baseUrl/ds_lc/v1/lesson/my-contributions';
   static var ClearCourseProgress = '$baseUrl/ds_lc/v1/courses/clear-history/python';
   static var fetchOtherProfileInformation = '$baseUrl/wp/v2/users/profile/esubalew';
+  static var follow = '$baseUrl/wp/v2/users/friendship/follow/test';
+   static var unfollow = '$baseUrl/wp/v2/users/friendship/unfollow/test';
 
 }
 

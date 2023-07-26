@@ -593,4 +593,51 @@ class ApiProvider {
       print('Error creating user: $e');
     }
   }
+  
+  Future follow() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var dio = Dio();
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
+    try {
+      Response response = await dio.post(AppUrl.follow);
+  
+
+      if (response.statusCode == 200) {
+
+       return response.data;
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+      
+        throw Exception('Failed follow');
+      }
+    } catch (e) {
+      print('Error to follow: $e');
+    }
+  }
+  Future unfollow() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var dio = Dio();
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
+    try {
+      Response response = await dio.post(AppUrl.unfollow);
+  
+
+      if (response.statusCode == 200) {
+
+       return response.data;
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        print("coded${response.statusCode}");
+        throw Exception('Failed to unfollow.');
+      }
+    } catch (e) {
+      print('Error to unfollow: $e');
+    }
+  }
 }

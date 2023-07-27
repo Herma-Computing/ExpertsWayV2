@@ -2,7 +2,8 @@ import 'package:expertsway/ui/pages/landing_page/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:get/get.dart';
-import 'package:expertsway/models/auth_model.dart';
+
+import '../../../services/api_controller.dart';
 
 class OtherProfile extends StatefulWidget {
   const OtherProfile({Key? key}) : super(key: key);
@@ -15,13 +16,16 @@ class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
 
   final LandingPageController controller = Get.put(LandingPageController());
+ late  bool isfollowing;
   @override
   void initState() {
+    Get.arguments["isFollowing"]==1?isfollowing=true:isfollowing=false;
     controller.getProfileDetails();
     super.initState();
   }
 
   Widget build(BuildContext context) {
+    ApiProvider provider= ApiProvider();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -71,16 +75,30 @@ class _OtherProfileState extends State<OtherProfile> {
                         child: Icon(Icons.check_circle),
                       ),
                       ElevatedButton(
-                          onPressed: () {},
-                          child:Get.arguments["isFollowing"]==1? Text(
-                            "following",
-                            style: const TextStyle(color: Colors.black),
-                          ): Text(
-                            "follow",
-                            style: const TextStyle(color: Colors.black),
-                          ),
+                          onPressed: () { //follow
+                            if(isfollowing==true){
+                            provider.unfollow();
+                        setState(() {
+                          isfollowing=false;
+                        });
+
+                            }else{
+                               provider.follow();
+                               setState(() {
+                                 isfollowing=true;
+                               });
+
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
+                          ),
+                          child: isfollowing==true? const Text(
+                            "following",
+                            style: TextStyle(color: Colors.black),
+                          ): const Text(
+                            "follow",
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   ),

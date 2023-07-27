@@ -5,6 +5,7 @@ import '../auth/auth.dart';
 import '../auth/changepassword.dart';
 import '../auth/forgotpassword.dart';
 import '../auth/verification.dart';
+import '../leaderboard.dart';
 import '../ui/pages/contributions/content_submitted.dart';
 import '../ui/pages/contributions/my_contributions.dart';
 import '../ui/pages/contributions/terms_and_conditions.dart';
@@ -41,7 +42,7 @@ final pages = [
   GetPage(name: AppRoute.contentSubmitted, page: () => const ContentSubmitted()),
   GetPage(name: AppRoute.changepassword, page: () => const ChangePasswordClass()),
   GetPage(name: AppRoute.profile, page: () => const Profile()),
-
+  GetPage(name: AppRoute.leaderBoardPage,page: () => LeaderBoardPage(onMenuTap: () {},)),
   GetPage(name: AppRoute.myContributions, page: () => const MyContributions()),
   
   GetPage(name: AppRoute.otherProfilePage, page: () => const OtherProfile()),

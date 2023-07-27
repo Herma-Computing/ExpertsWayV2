@@ -42,6 +42,22 @@ class ApiProvider {
     }
   }
 
+  Future<Map<String, List<Map<String, dynamic>>>> fetchLeaderboardData() async {
+    var dio = Dio();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? country = prefs.getString("country");
+    dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
+    String url = "${AppUrl.leaderboard}${country != null ? "?country=$country" : ""}";
+    Response response = await dio.get(url);
+    if (response.statusCode == 200) {
+      // List<Map> data = (response.data as List).map((e) => e as Map).toList();
+      Map<String, List<Map<String, dynamic>>> data =
+      (response.data as Map).map((key, value) => MapEntry(key as String, (value as List).map((e) => e as Map<String, dynamic>).toList()));
+      return data;
+    } else {
+      throw Exception("Problem occurred while trying to fetch leaderboard data");
+    }
+  }
   Future<Lesson> getMyContributions() async {
     var dio = Dio();
 

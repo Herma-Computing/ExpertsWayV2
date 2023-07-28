@@ -527,17 +527,17 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
               return InkWell(
                 onTap: ()async{
                    
-                 OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+                //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
                  
                        Get.toNamed(AppRoute.otherProfilePage, arguments: {
-                          'firstName': value.first_name,
-                          "lastName": value.last_name,
-                          "isFollowing": value.is_following,
-                          "ocupation": value.occupation,
-                          "avatarUrl": value.avatar_url,
-                          "birthDate": value.birthdate,
-                          "country": value.country,
-                          "preferedLanguges": value.perfered_languages,
+                          'firstName': leaderboardData[index]['first_name'],
+                          "lastName":  leaderboardData[index]['last_name'],
+                          "isFollowing":  leaderboardData[index]['is_following'],
+                          "ocupation":   leaderboardData[index]['occupation'],
+                          "avatarUrl": leaderboardData[index]['avatar_url'],
+                          "birthDate": leaderboardData[index]['birthdate'],
+                          "country": leaderboardData[index]['country'],
+                          "preferedLanguges": leaderboardData[index]['perfered_languages'],
                         });
                        
                 },

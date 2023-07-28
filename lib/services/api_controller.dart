@@ -578,22 +578,25 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.get(AppUrl.fetchOtherProfileInformation);
-  
-
-      if (response.statusCode == 200) {
-        print("tokens${prefs.getString("token")}");
-       return OtherProfileModels.fromJson(response.data);
-      } else {
-        // If the server did not return a 201 CREATED response,
-        // then throw an exception.
-        print("coded${response.statusCode}");
-        throw Exception('Failed to create album.');
-      }
+   if(response.data != null){
+     if (response.statusCode == 200) {
+          return OtherProfileModels.fromJson(response.data);
+        } else {
+          // If the server did not return a 201 CREATED response,
+          // then throw an exception.
+          print("coded${response.statusCode}");
+          throw Exception('Failed to create album.');
+        }
+   }else{
+    print("something went wrong internal error");
+   }
+     
     } catch (e) {
+
       print('Error creating user: $e');
     }
   }
-  
+
   Future follow() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -602,21 +605,20 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.post(AppUrl.follow);
-  
 
       if (response.statusCode == 200) {
-
-       return response.data;
+        return response.data;
       } else {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
-      
+
         throw Exception('Failed follow');
       }
     } catch (e) {
       print('Error to follow: $e');
     }
   }
+
   Future unfollow() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -625,11 +627,9 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.post(AppUrl.unfollow);
-  
 
       if (response.statusCode == 200) {
-
-       return response.data;
+        return response.data;
       } else {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.

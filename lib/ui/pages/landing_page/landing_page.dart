@@ -86,8 +86,9 @@ class LandingPage extends GetView<LandingPageController> {
                     DrawerHeader(controller, theme),
                     DrawerButton(
                       onPress: ()async {
-                        controller.scaffoldKey.currentState?.closeDrawer();
+           
                  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+                 
                        Get.toNamed(AppRoute.otherProfilePage, arguments: {
                           'firstName': value.first_name,
                           "lastName": value.last_name,
@@ -98,6 +99,7 @@ class LandingPage extends GetView<LandingPageController> {
                           "country": value.country,
                           "preferedLanguges": value.perfered_languages,
                         });
+                       controller.scaffoldKey.currentState?.closeDrawer();
                       },
                       theme: theme,
                       icon: Icons.group_add,

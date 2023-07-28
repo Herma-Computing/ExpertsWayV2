@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/shared_preference/shared_preference.dart';
 import '../models/contributor_lesson.dart';
+import '../models/follow_unfollow_models.dart';
 import '../models/other_profile_model.dart';
 import '../models/profile.dart';
 
@@ -52,12 +53,13 @@ class ApiProvider {
     if (response.statusCode == 200) {
       // List<Map> data = (response.data as List).map((e) => e as Map).toList();
       Map<String, List<Map<String, dynamic>>> data =
-      (response.data as Map).map((key, value) => MapEntry(key as String, (value as List).map((e) => e as Map<String, dynamic>).toList()));
+          (response.data as Map).map((key, value) => MapEntry(key as String, (value as List).map((e) => e as Map<String, dynamic>).toList()));
       return data;
     } else {
       throw Exception("Problem occurred while trying to fetch leaderboard data");
     }
   }
+
   Future<Lesson> getMyContributions() async {
     var dio = Dio();
 
@@ -594,8 +596,8 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.get(AppUrl.fetchOtherProfileInformation);
-   if(response.data != null){
-     if (response.statusCode == 200) {
+      if (response.data != null) {
+        if (response.statusCode == 200) {
           return OtherProfileModels.fromJson(response.data);
         } else {
           // If the server did not return a 201 CREATED response,
@@ -603,25 +605,24 @@ class ApiProvider {
           print("coded${response.statusCode}");
           throw Exception('Failed to create album.');
         }
-   }else{
-    print("something went wrong internal error");
-   }
-     
+      } else {
+        print("something went wrong internal error");
+      }
     } catch (e) {
-
       print('Error creating user: $e');
     }
   }
 
   Future follow() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    late var dataReturned;
 
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.post(AppUrl.follow);
-
+      dataReturned = response.data;
       if (response.statusCode == 200) {
         return response.data;
       } else {
@@ -633,27 +634,28 @@ class ApiProvider {
     } catch (e) {
       print('Error to follow: $e');
     }
+    return dataReturned;
   }
 
   Future unfollow() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    late var dataReturned;
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.post(AppUrl.unfollow);
-
+      dataReturned = response.data;
       if (response.statusCode == 200) {
         return response.data;
       } else {
         // If the server did not return a 201 CREATED response,
-        // then throw an exception.
-        print("coded${response.statusCode}");
+
         throw Exception('Failed to unfollow.');
       }
     } catch (e) {
       print('Error to unfollow: $e');
     }
+    return dataReturned;
   }
 }

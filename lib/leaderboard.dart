@@ -15,6 +15,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'models/other_profile_model.dart';
+
 class LeaderBoardPage extends StatefulWidget {
   const LeaderBoardPage({
     Key? key,
@@ -257,155 +259,175 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
   }
 
   Widget _buildTopThreeAvatars(BuildContext context, List<Map<dynamic, dynamic>> leaderboardData) {
-    return Container(
-      padding: const EdgeInsets.only(top: 20),
-      width: MediaQuery.of(context).size.width,
-      height: 150,
-      child: Stack(
-        alignment: Alignment.center,
-        clipBehavior: Clip.none,
-        children: [
-          if (leaderboardData.length >= 3)
-            Positioned(
-              key: const Key("third"),
-              left: 20,
-              top: 26,
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.brown,
-                    minRadius: 50,
-                    maxRadius: 50,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          leaderboardData[2]['avatar_url'],
-                          fit: BoxFit.cover,
+    return InkWell(
+      onTap: ()async{
+         
+                 OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+                 
+                       Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                          'firstName': value.first_name,
+                          "lastName": value.last_name,
+                          "isFollowing": value.is_following,
+                          "ocupation": value.occupation,
+                          "avatarUrl": value.avatar_url,
+                          "birthDate": value.birthdate,
+                          "country": value.country,
+                          "preferedLanguges": value.perfered_languages,
+                        }
+                        
+                        );
+           
+      },
+      child: Container(
+        padding: const EdgeInsets.only(top: 20),
+        width: MediaQuery.of(context).size.width,
+        height: 150,
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            if (leaderboardData.length >= 3)
+              Positioned(
+                key: const Key("third"),
+                left: 20,
+                top: 26,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.brown,
+                      minRadius: 50,
+                      maxRadius: 50,
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        padding: const EdgeInsets.all(4.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            leaderboardData[2]['avatar_url'],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -8,
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.brown,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "3rd",
-                          style: TextStyle(fontSize: 10, color: Colors.white),
+                    Positioned(
+                      bottom: -8,
+                      child: Container(
+                        width: 36,
+                        height: 36,
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.brown,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "3rd",
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          if (leaderboardData.length >= 2)
-            Positioned(
-              key: const Key("second"),
-              right: 20,
-              top: 26,
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    minRadius: 50,
-                    maxRadius: 50,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          leaderboardData[1]['avatar_url'],
-                          fit: BoxFit.cover,
+            if (leaderboardData.length >= 2)
+              Positioned(
+                key: const Key("second"),
+                right: 20,
+                top: 26,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      minRadius: 50,
+                      maxRadius: 50,
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        padding: const EdgeInsets.all(4.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            leaderboardData[1]['avatar_url'],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -8,
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "2nd",
-                          style: TextStyle(fontSize: 10, color: Colors.white),
+                    Positioned(
+                      bottom: -8,
+                      child: Container(
+                        width: 36,
+                        height: 36,
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "2nd",
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          if (leaderboardData.isNotEmpty)
-            Positioned(
-              key: const Key("first"),
-              top: 0,
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: AlignmentDirectional.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.orange,
-                    minRadius: 70,
-                    maxRadius: 70,
-                    child: Container(
-                      width: 140,
-                      height: 140,
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          leaderboardData[0]['avatar_url'],
-                          fit: BoxFit.cover,
+            if (leaderboardData.isNotEmpty)
+              Positioned(
+                key: const Key("first"),
+                top: 0,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.orange,
+                      minRadius: 70,
+                      maxRadius: 70,
+                      child: Container(
+                        width: 140,
+                        height: 140,
+                        padding: const EdgeInsets.all(4.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            leaderboardData[0]['avatar_url'],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -10,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 166, 0),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "1st",
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                    Positioned(
+                      bottom: -10,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 166, 0),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "1st",
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -502,53 +524,72 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
                 return Colors.white;
               }.call();
               var textColor = themeProvider.currentTheme == ThemeData.dark() ? Colors.white : Colors.black;
-              return Container(
-                height: 70,
-                width: MediaQuery.of(context).size.width - 16,
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
-                child: CardWidget(
-                  gradient: false,
-                  button: false,
-                  height: 60,
-                  color: backgroundColor,
-                  child: Row(
-                    children: <Widget>[
-                      const Spacer(flex: 1),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "${index + 1}.",
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                      ),
-                      const Spacer(flex: 2),
-                      CircleAvatar(
-                        minRadius: 22,
-                        maxRadius: 22,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            leaderboardData[index]['avatar_url'],
-                            fit: BoxFit.cover,
+              return InkWell(
+                onTap: ()async{
+                   
+                 OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+                 
+                       Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                          'firstName': value.first_name,
+                          "lastName": value.last_name,
+                          "isFollowing": value.is_following,
+                          "ocupation": value.occupation,
+                          "avatarUrl": value.avatar_url,
+                          "birthDate": value.birthdate,
+                          "country": value.country,
+                          "preferedLanguges": value.perfered_languages,
+                        });
+                       
+                },
+                
+                child: Container(
+                  height: 70,
+                  width: MediaQuery.of(context).size.width - 16,
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+                  child: CardWidget(
+                    gradient: false,
+                    button: false,
+                    height: 60,
+                    color: backgroundColor,
+                    child: Row(
+                      children: <Widget>[
+                        const Spacer(flex: 1),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${index + 1}.",
+                            style: TextStyle(fontSize: 16, color: textColor),
                           ),
                         ),
-                      ),
-                      const Spacer(flex: 2),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          leaderboardData[index]['first_name'],
-                          style: TextStyle(fontSize: 16, color: textColor),
-                          overflow: TextOverflow.fade,
+                        const Spacer(flex: 2),
+                        CircleAvatar(
+                          minRadius: 22,
+                          maxRadius: 22,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              leaderboardData[index]['avatar_url'],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
-                      const Spacer(flex: 5),
-                      Text(
-                        "${leaderboardData[index]['month_score']} pts.",
-                        style: TextStyle(fontSize: 16, color: textColor),
-                      ),
-                      const Spacer(flex: 1),
-                    ],
+                        const Spacer(flex: 2),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            leaderboardData[index]['first_name'],
+                            style: TextStyle(fontSize: 16, color: textColor),
+                            overflow: TextOverflow.fade,
+                          ),
+                        ),
+                        const Spacer(flex: 5),
+                        Text(
+                          "${leaderboardData[index]['month_score']} pts.",
+                          style: TextStyle(fontSize: 16, color: textColor),
+                        ),
+                        const Spacer(flex: 1),
+                      ],
+                    ),
                   ),
                 ),
               );

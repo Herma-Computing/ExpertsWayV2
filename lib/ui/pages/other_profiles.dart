@@ -4,6 +4,8 @@ import 'package:expertsway/utils/color.dart';
 import 'package:get/get.dart';
 
 import '../../../services/api_controller.dart';
+import '../../models/follow_unfollow_models.dart';
+import '../../models/other_profile_model.dart';
 
 class OtherProfile extends StatefulWidget {
   const OtherProfile({Key? key}) : super(key: key);
@@ -16,16 +18,18 @@ class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
 
   final LandingPageController controller = Get.put(LandingPageController());
- late  bool isfollowing;
+  late bool isfollowing;
+  bool isError = false;
+  List<OtherProfileModels> otherProfileInfo = [];
   @override
   void initState() {
-    Get.arguments["isFollowing"]==1?isfollowing=true:isfollowing=false;
+    Get.arguments["isFollowing"] == 1 ? isfollowing = true : isfollowing = false;
     controller.getProfileDetails();
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    ApiProvider provider= ApiProvider();
+    ApiProvider provider = ApiProvider();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -70,36 +74,49 @@ class _OtherProfileState extends State<OtherProfile> {
                   padding: const EdgeInsets.only(left: 130, bottom: 30),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Icon(Icons.check_circle),
                       ),
                       ElevatedButton(
-                          onPressed: () { //follow
-                            if(isfollowing==true){
-                            provider.unfollow();
-                        setState(() {
-                          isfollowing=false;
-                        });
-
-                            }else{
-                               provider.follow();
-                               setState(() {
-                                 isfollowing=true;
-                               });
-
+                          onPressed: () async {
+                       
+                            if (isError == true) {
+                              Get.snackbar("Someting went wrong", "please try again latter");
+                            }
+                            if (isfollowing == true) {
+                              FollowUnfollow dataReturned = FollowUnfollow.fromJson(await provider.unfollow());
+                             
+                              if (dataReturned.code == "unfollow_user") {
+                                setState(() {
+                                  isfollowing = false;
+                                  isError = false;
+                                });
+                              } 
+                            } else {
+                              FollowUnfollow dataReturned = FollowUnfollow.fromJson(await provider.follow());
+                              if (dataReturned.code == "follow_user") {
+                                setState(() {
+                                  isfollowing = true;
+                                  isError = false;
+                                });
+                              } else {
+                               
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
                           ),
-                          child: isfollowing==true? const Text(
-                            "following",
-                            style: TextStyle(color: Colors.black),
-                          ): const Text(
-                            "follow",
-                            style: TextStyle(color: Colors.black),
-                          )),
+                          child: isfollowing == true
+                              ? const Text(
+                                  "following",
+                                  style: TextStyle(color: Colors.black),
+                                )
+                              : const Text(
+                                  "follow",
+                                  style: TextStyle(color: Colors.black),
+                                )),
                     ],
                   ),
                 ),
@@ -114,11 +131,11 @@ class _OtherProfileState extends State<OtherProfile> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       height: 100,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
                               "23",
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: grey1),
@@ -140,11 +157,11 @@ class _OtherProfileState extends State<OtherProfile> {
                       width: 90,
                       height: 100,
                       decoration: BoxDecoration(color: Color.fromARGB(255, 238, 236, 236), borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
                               "88",
                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25, color: Color.fromARGB(202, 75, 75, 75)),
@@ -359,9 +376,9 @@ class _OtherProfileState extends State<OtherProfile> {
                           ),
                         ],
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Image(image: AssetImage("assets/images/go.png")),

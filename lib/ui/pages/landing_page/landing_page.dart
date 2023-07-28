@@ -21,7 +21,9 @@ import '../../../models/other_profile_model.dart';
 import '../../../services/api_controller.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/color.dart';
-ApiProvider provider= ApiProvider();
+
+ApiProvider provider = ApiProvider();
+
 class LandingPage extends GetView<LandingPageController> {
   const LandingPage({super.key});
 
@@ -84,32 +86,10 @@ class LandingPage extends GetView<LandingPageController> {
                 child: ListView(
                   children: [
                     DrawerHeader(controller, theme),
+
                     DrawerButton(
-                      onPress: ()async {
-           
-                 OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
-                 
-                       Get.toNamed(AppRoute.otherProfilePage, arguments: {
-                          'firstName': value.first_name,
-                          "lastName": value.last_name,
-                          "isFollowing": value.is_following,
-                          "ocupation": value.occupation,
-                          "avatarUrl": value.avatar_url,
-                          "birthDate": value.birthdate,
-                          "country": value.country,
-                          "preferedLanguges": value.perfered_languages,
-                        });
-                       controller.scaffoldKey.currentState?.closeDrawer();
-                      },
-                      theme: theme,
-                      icon: Icons.group_add,
-                      name: 'other Profiles',
-                    ),
-                    DrawerButton(
-                      onPress: () async{
+                      onPress: () async {
                         controller.scaffoldKey.currentState?.closeDrawer();
-                     
-                       
                       },
                       theme: theme,
                       icon: BoxIcons.bx_home,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:expertsway/models/auth_model.dart';
 import 'package:expertsway/models/course.dart';
@@ -11,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/shared_preference/shared_preference.dart';
 import '../models/contributor_lesson.dart';
-import '../models/follow_unfollow_models.dart';
+
 import '../models/other_profile_model.dart';
 import '../models/profile.dart';
 
@@ -588,21 +589,21 @@ class ApiProvider {
     );
   }
 
-  Future fetchOtherProfileInformation() async {
+  Future<OtherProfileModels> fetchOtherProfileInformation(String username) async {
+    print('solx${Random().nextInt(70)}');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    late OtherProfileModels datas;
 
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
-      Response response = await dio.get(AppUrl.fetchOtherProfileInformation);
+      Response response = await dio.get("${AppUrl.fetchOtherProfileInformation}/$username");
       if (response.data != null) {
         if (response.statusCode == 200) {
+          datas = OtherProfileModels.fromJson(response.data);
           return OtherProfileModels.fromJson(response.data);
         } else {
-          // If the server did not return a 201 CREATED response,
-          // then throw an exception.
-          print("coded${response.statusCode}");
           throw Exception('Failed to create album.');
         }
       } else {
@@ -611,6 +612,7 @@ class ApiProvider {
     } catch (e) {
       print('Error creating user: $e');
     }
+    return datas;
   }
 
   Future follow() async {
@@ -646,6 +648,8 @@ class ApiProvider {
     try {
       Response response = await dio.post(AppUrl.unfollow);
       dataReturned = response.data;
+      print(response);
+
       if (response.statusCode == 200) {
         return response.data;
       } else {

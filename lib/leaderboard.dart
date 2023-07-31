@@ -262,20 +262,20 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
     return InkWell(
       onTap: ()async{
          
-                 OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+                //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
                  
-                       Get.toNamed(AppRoute.otherProfilePage, arguments: {
-                          'firstName': value.first_name,
-                          "lastName": value.last_name,
-                          "isFollowing": value.is_following,
-                          "ocupation": value.occupation,
-                          "avatarUrl": value.avatar_url,
-                          "birthDate": value.birthdate,
-                          "country": value.country,
-                          "preferedLanguges": value.perfered_languages,
-                        }
+                //        Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                //           'firstName': value.first_name,
+                //           "lastName": value.last_name,
+                //           "isFollowing": value.is_following,
+                //           "ocupation": value.occupation,
+                //           "avatarUrl": value.avatar_url,
+                //           "birthDate": value.birthdate,
+                //           "country": value.country,
+                //           "preferedLanguges": value.perfered_languages,
+                //         }
                         
-                        );
+                //         );
            
       },
       child: Container(
@@ -506,6 +506,7 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
   }
 
   Widget _buildLeaderboardList(List<Map<dynamic, dynamic>> leaderboardData) {
+
     // the widget built by this method should be constrained externally. call this method in a SizedBox or something.
     final themeProvider = Provider.of<ThemeProvider>(context);
     return SingleChildScrollView(
@@ -526,18 +527,14 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
               var textColor = themeProvider.currentTheme == ThemeData.dark() ? Colors.white : Colors.black;
               return InkWell(
                 onTap: ()async{
-                   
+                     
                 //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
                  
-                       Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                       Get.toNamed(AppRoute.otherProfilePage, 
+                    
+                       arguments: {
                           'firstName': leaderboardData[index]['first_name'],
-                          "lastName":  leaderboardData[index]['last_name'],
-                          "isFollowing":  leaderboardData[index]['is_following'],
-                          "ocupation":   leaderboardData[index]['occupation'],
-                          "avatarUrl": leaderboardData[index]['avatar_url'],
-                          "birthDate": leaderboardData[index]['birthdate'],
-                          "country": leaderboardData[index]['country'],
-                          "preferedLanguges": leaderboardData[index]['perfered_languages'],
+                          
                         });
                        
                 },

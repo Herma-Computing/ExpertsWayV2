@@ -26,9 +26,10 @@ class AppUrl {
   static var changeProfilePicture = '$baseUrl/wp/v2/users/profile-picture';
   static var myContributions = '$baseUrl/ds_lc/v1/lesson/my-contributions';
   static var ClearCourseProgress = '$baseUrl/ds_lc/v1/courses/clear-history/python';
-  static var fetchOtherProfileInformation = '$baseUrl/wp/v2/users/profile/esubalew';
+  static var fetchOtherProfileInformation = '$baseUrl/wp/v2/users/profile';
   static var follow = '$baseUrl/wp/v2/users/friendship/follow/esubalew';
    static var unfollow = '$baseUrl/wp/v2/users/friendship/unfollow/esubalew';
+
 
 }
 

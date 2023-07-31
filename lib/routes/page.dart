@@ -45,6 +45,6 @@ final pages = [
   GetPage(name: AppRoute.leaderBoardPage,page: () => LeaderBoardPage(onMenuTap: () {},)),
   GetPage(name: AppRoute.myContributions, page: () => const MyContributions()),
   
-  GetPage(name: AppRoute.otherProfilePage, page: () => const OtherProfile()),
+  GetPage(name: AppRoute.otherProfilePage, page: () =>  OtherProfile()),
 
 ];

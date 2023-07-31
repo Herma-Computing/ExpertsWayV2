@@ -20,14 +20,13 @@ class LandingPageController extends GetxController {
   RxList<CourseElement> startedCourses = <CourseElement>[].obs; // these are the courses the user has started learning
   RxList<CourseProgressElement> progressList = <CourseProgressElement>[].obs;
 
-
   String profileName = '';
   String _profileImage = '';
 
   String get profileImage => _profileImage;
   String get profileNames => profileName;
 
-  set profileImage(String value) {   
+  set profileImage(String value) {
     _profileImage = value;
     update();
   }
@@ -54,7 +53,7 @@ class LandingPageController extends GetxController {
     getCoursesFromDatabase();
     // read courses data from the API in case there's some updates
     getCoursesFromApi(savedCourseLastUpdateDate, savedPlLastUpdateDate);
-     getProfileDetails();
+    getProfileDetails();
   }
 
   Future getCoursesFromApi(String? savedCourseLastUpdateDate, String? savedPlLastUpdateDate) async {
@@ -191,14 +190,10 @@ class LandingPageController extends GetxController {
 
   // get  user profile
   Future getProfileDetails() async {
-
-    
-   
-  User result = await UserPreferences.getuser('image', 'name');
+    User result = await UserPreferences.getuser('image', 'name');
     profileName = result.name!;
-    _profileImage =  result.image!;
-  
+    _profileImage = result.image!;
+
     update();
-    
   }
 }

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../services/api_controller.dart';
 
 import '../../models/other_profile_model.dart';
+import '../../services/follow_unfollow_controller.dart';
 
 class OtherProfile extends StatefulWidget {
   late String userName;
@@ -19,13 +20,13 @@ class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
 
   final LandingPageController controller = Get.put(LandingPageController());
+  final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
 
   List<OtherProfileModels> otherProfileInfo = [];
   @override
   void initState() {
-    // print('this is ux ${ Get.arguments["isFollowing"]}');
-    widget.userName = Get.arguments["firstName"];
-
+    followUnfollowController.IsFollow(Get.arguments["username"]);
+    widget.userName = Get.arguments["username"];
     controller.getProfileDetails();
     super.initState();
   }
@@ -49,11 +50,10 @@ class _OtherProfileState extends State<OtherProfile> {
           ),
         ),
         body: FutureBuilder<OtherProfileModels>(
-            // future: provider.fetchOtherProfileInformation(widget.userName), Correct implementations
-            future: provider.fetchOtherProfileInformation("esubalew"), //this is for testing
+            future: provider.fetchOtherProfileInformation(widget.userName),
+            //future: provider.fetchOtherProfileInformation("esubalew"), //this is for testing
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                print("yes${snapshot.data!.is_following}");
                 if (snapshot.hasError) {
                   return const Text("something went wrong please try agin latter");
                 }
@@ -91,28 +91,30 @@ class _OtherProfileState extends State<OtherProfile> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(Icons.check_circle),
                                   ),
-                                  ElevatedButton(
-                                      onPressed: () async {
-                                        if (snapshot.data!.is_following == 1) {
-                                          await provider.unfollow();
-                                          setState(() {});
-                                        } else {
-                                          await provider.follow();
-                                          setState(() {});
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.white,
-                                      ),
-                                      child: snapshot.data!.is_following == 1
-                                          ? const Text(
-                                              "following",
-                                              style: TextStyle(color: Colors.black),
-                                            )
-                                          : const Text(
-                                              "follow",
-                                              style: TextStyle(color: Colors.black),
-                                            )),
+                                  GetBuilder<FollowUnfollowController>(
+                                    builder: (controller) => ElevatedButton(
+                                        onPressed: () {
+                                          if (controller.isfollowOrunfollow == true) {
+                                            provider.unfollow(widget.userName);
+                                            followUnfollowController.IsFollow(widget.userName);
+                                          } else {
+                                            provider.follow(widget.userName);
+                                            followUnfollowController.IsFollow(widget.userName);
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                        ),
+                                        child: controller.isfollowOrunfollow == true
+                                            ? const Text(
+                                                "following",
+                                                style: TextStyle(color: Colors.black),
+                                              )
+                                            : const Text(
+                                                "follow",
+                                                style: TextStyle(color: Colors.black),
+                                              )),
+                                  )
                                 ],
                               ),
                             ),

@@ -3,7 +3,7 @@
 class OtherProfileModels{
   String first_name;
   String last_name;
-  int is_following;
+  bool is_following;
   String avatar_url;
   String occupation;
   String birthdate;
@@ -12,7 +12,7 @@ class OtherProfileModels{
   OtherProfileModels({
     required this.first_name,
     required this.last_name,
-    required this.is_following,
+    required bool this.is_following,
     required this.avatar_url,
     required this.occupation,
     required this.birthdate,
@@ -24,7 +24,7 @@ class OtherProfileModels{
     return   OtherProfileModels(
       first_name: json['first_name'] as String,
       last_name: json['last_name'] as String,
-      is_following: json['is_following'] as int,
+      is_following: json['is_following'] as bool,
       avatar_url: json['avatar_url'] as String,
       occupation: json['occupation'] as String,
       birthdate: json['birthdate'] as String,

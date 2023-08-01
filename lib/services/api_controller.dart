@@ -590,7 +590,7 @@ class ApiProvider {
   }
 
   Future<OtherProfileModels> fetchOtherProfileInformation(String username) async {
-    print('solx${Random().nextInt(70)}');
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late OtherProfileModels datas;
 
@@ -599,6 +599,7 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.get("${AppUrl.fetchOtherProfileInformation}/$username");
+     
       if (response.data != null) {
         if (response.statusCode == 200) {
           datas = OtherProfileModels.fromJson(response.data);
@@ -615,7 +616,7 @@ class ApiProvider {
     return datas;
   }
 
-  Future follow() async {
+  Future follow(String username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late var dataReturned;
 
@@ -623,7 +624,7 @@ class ApiProvider {
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
-      Response response = await dio.post(AppUrl.follow);
+      Response response = await dio.post("${AppUrl.follow}/$username");
       dataReturned = response.data;
       if (response.statusCode == 200) {
         return response.data;
@@ -639,16 +640,16 @@ class ApiProvider {
     return dataReturned;
   }
 
-  Future unfollow() async {
+  Future unfollow(String username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late var dataReturned;
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
-      Response response = await dio.post(AppUrl.unfollow);
+      Response response = await dio.post("${AppUrl.unfollow}/$username");
       dataReturned = response.data;
-      print(response);
+     
 
       if (response.statusCode == 200) {
         return response.data;

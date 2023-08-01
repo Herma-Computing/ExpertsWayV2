@@ -61,6 +61,7 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
   ];
   @override
   void initState() {
+    
     local = false;
     SharedPreferences.getInstance().then((value) => prefs = value);
     super.initState();
@@ -529,11 +530,11 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
                 onTap: ()async{
                      
                 //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
-                 
+                 print("hji  ${leaderboardData[index]['username']}");
                        Get.toNamed(AppRoute.otherProfilePage, 
                     
                        arguments: {
-                          'firstName': leaderboardData[index]['first_name'],
+                          'username': leaderboardData[index]['username'],
                           
                         });
                        

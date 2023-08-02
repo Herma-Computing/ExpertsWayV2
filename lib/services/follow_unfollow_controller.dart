@@ -6,10 +6,13 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FollowUnfollowController extends GetxController {
-  late bool isFollowing;
+  late bool isFollowing=true;
+  bool followers=true;
 
   bool get isfollowOrunfollow => isFollowing;
+  bool get getfollowers => followers;
   Future<OtherProfileModels> IsFollow(String username) async {
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late OtherProfileModels datas;
 
@@ -35,5 +38,13 @@ class FollowUnfollowController extends GetxController {
       print('Error creating user: $e');
     }
     return datas;
+  }
+  seeFollowers(){
+    followers=true;
+    update();
+  }
+  seeFollowing(){
+    followers=false;
+    update();
   }
 }

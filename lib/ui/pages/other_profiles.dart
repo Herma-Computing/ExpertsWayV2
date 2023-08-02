@@ -7,6 +7,8 @@ import '../../../services/api_controller.dart';
 
 import '../../models/other_profile_model.dart';
 import '../../services/follow_unfollow_controller.dart';
+import '../widgets/card.dart';
+import 'navmenu/menu_dashboard_layout.dart';
 
 class OtherProfile extends StatefulWidget {
   late String userName;
@@ -125,7 +127,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                 Container(
                                   width: 90,
                                   decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 238, 236, 236),
+                                    color: const Color.fromARGB(255, 238, 236, 236),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   height: 100,
@@ -465,6 +467,156 @@ class _OtherProfileState extends State<OtherProfile> {
                                   ),
                                 ),
                               ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            GetBuilder<FollowUnfollowController>(
+                              builder: (controller) => Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        followUnfollowController.seeFollowers();
+                                      },
+                                      child: Text(
+                                        "Followers",
+                                        style: TextStyle(
+                                            fontSize: 20, color: controller.getfollowers == true ? Color.fromARGB(255, 11, 140, 214) : Colors.black),
+                                      )),
+                                  TextButton(
+                                      onPressed: () {
+                                        followUnfollowController.seeFollowing();
+                                      },
+                                      child: Text(
+                                        "Following",
+                                        style: TextStyle(
+                                            fontSize: 20, color: controller.getfollowers == false ? Color.fromARGB(255, 11, 140, 214) : Colors.black),
+                                      ))
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: GetBuilder<FollowUnfollowController>(
+                                builder: (controller) => controller.getfollowers == true
+                                    ? snapshot.data!.followers.isEmpty
+                                        ? const Padding(
+                                            padding: const EdgeInsets.all(18.0),
+                                            child: Text(
+                                              "You don't have any followers",
+                                              style: TextStyle(fontSize: 20, color: Colors.black),
+                                            ),
+                                          )
+                                        : ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: snapshot.data!.followers.length,
+                                            itemBuilder: (context, index) {
+                                              return Container(
+                                                height: 70,
+                                                width: MediaQuery.of(context).size.width - 16,
+                                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+                                                child: CardWidget(
+                                                  gradient: false,
+                                                  button: false,
+                                                  height: 60,
+                                                  color: backgroundColor,
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      const Spacer(flex: 1),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          "${index + 1}.",
+                                                          style: const TextStyle(fontSize: 16, color: Colors.black),
+                                                        ),
+                                                      ),
+                                                      const Spacer(flex: 2),
+                                                      CircleAvatar(
+                                                        minRadius: 22,
+                                                        maxRadius: 22,
+                                                        child: ClipRRect(
+                                                          borderRadius: BorderRadius.circular(100),
+                                                          child: Image.network(
+                                                            snapshot.data!.followers[index].avator_url,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Spacer(flex: 2),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          snapshot.data!.followers[index].first_name,
+                                                          style: const TextStyle(fontSize: 16, color: Colors.black),
+                                                          overflow: TextOverflow.fade,
+                                                        ),
+                                                      ),
+                                                      const Spacer(flex: 5),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            })
+                                    : snapshot.data!.followings.isEmpty
+                                        ? const Padding(
+                                            padding: const EdgeInsets.all(18.0),
+                                            child: Text(
+                                              "You didn't follow anyone yet",
+                                              style: TextStyle(fontSize: 20, color: Colors.black),
+                                            ),
+                                          )
+                                        : ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: snapshot.data!.followings.length,
+                                            itemBuilder: (context, index) {
+                                              return Container(
+                                                height: 70,
+                                                width: MediaQuery.of(context).size.width - 16,
+                                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+                                                child: CardWidget(
+                                                  gradient: false,
+                                                  button: false,
+                                                  height: 60,
+                                                  color: backgroundColor,
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      const Spacer(flex: 1),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          "${index + 1}.",
+                                                          style: const TextStyle(fontSize: 16, color: Colors.black),
+                                                        ),
+                                                      ),
+                                                      const Spacer(flex: 2),
+                                                      CircleAvatar(
+                                                        minRadius: 22,
+                                                        maxRadius: 22,
+                                                        child: ClipRRect(
+                                                          borderRadius: BorderRadius.circular(100),
+                                                          child: Image.network(
+                                                            snapshot.data!.followings[index].avator_url,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Spacer(flex: 2),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          snapshot.data!.followings[index].first_name,
+                                                          style: const TextStyle(fontSize: 16, color: Colors.black),
+                                                          overflow: TextOverflow.fade,
+                                                        ),
+                                                      ),
+                                                      const Spacer(flex: 5),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                              ),
                             ),
                           ],
                         ),

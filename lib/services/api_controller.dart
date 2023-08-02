@@ -592,7 +592,7 @@ class ApiProvider {
   Future<OtherProfileModels> fetchOtherProfileInformation(String username) async {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    late OtherProfileModels datas;
+    late OtherProfileModels userdatas;
 
     var dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
@@ -602,7 +602,7 @@ class ApiProvider {
      
       if (response.data != null) {
         if (response.statusCode == 200) {
-          datas = OtherProfileModels.fromJson(response.data);
+          userdatas = OtherProfileModels.fromJson(response.data);
           return OtherProfileModels.fromJson(response.data);
         } else {
           throw Exception('Failed to create album.');
@@ -613,7 +613,7 @@ class ApiProvider {
     } catch (e) {
       print('Error creating user: $e');
     }
-    return datas;
+    return userdatas;
   }
 
   Future follow(String username) async {

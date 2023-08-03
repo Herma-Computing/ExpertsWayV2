@@ -599,7 +599,7 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.get("${AppUrl.fetchOtherProfileInformation}/$username");
-     
+         
       if (response.data != null) {
         if (response.statusCode == 200) {
           userdatas = OtherProfileModels.fromJson(response.data);

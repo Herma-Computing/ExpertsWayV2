@@ -1,4 +1,4 @@
-class followingList {
+class FollowingList {
   String username;
   String first_name;
   String last_name;
@@ -6,10 +6,10 @@ class followingList {
 
   bool is_following;
 
-  followingList({required this.username, required this.first_name, required this.last_name, required this.avator_url, required this.is_following});
+  FollowingList({required this.username, required this.first_name, required this.last_name, required this.avator_url, required this.is_following});
 
-  factory followingList.fromJson(Map<String, dynamic> json) {
-    return followingList(
+  factory FollowingList.fromJson(Map<String, dynamic> json) {
+    return FollowingList(
       username: json['username'] as String,
       first_name: json['first_name'] as String,
       last_name: json['last_name'] as String,

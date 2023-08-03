@@ -25,6 +25,7 @@ class OtherProfileModels {
     required this.followings,
   });
   factory OtherProfileModels.fromJson(Map<String, dynamic> json) {
+
     return OtherProfileModels(
       first_name: json['first_name'] as String,
       last_name: json['last_name'] as String,
@@ -35,7 +36,7 @@ class OtherProfileModels {
       perfered_languages: json['perfered_languages'],
       country: json['country'] as String,
       followers: json['followers']==null?[]: json['followers'].map((content) => followersList.fromJson(content)).toList(),
-      followings: json['following']==null?[]:json['following'].map((content) => followersList.fromJson(content)).toList(),
+      followings: json['followings']==null?[]:json['followings'].map((content) => FollowingList.fromJson(content)).toList(),
     );
   }
   Map<String, dynamic> tojson() {

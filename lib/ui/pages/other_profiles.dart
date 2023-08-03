@@ -57,7 +57,28 @@ class _OtherProfileState extends State<OtherProfile> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
-                  return const Text("something went wrong please try agin latter");
+                  print(snapshot.error);
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 30, top:150),
+                        child: Text("something went wrong please try agin latter "),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Text("check your internet connections "),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text("Try again")),
+                    ],
+                  );
                 }
                 if (snapshot.hasData) {
                   if (snapshot.data != null) {
@@ -562,7 +583,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                         ? const Padding(
                                             padding: const EdgeInsets.all(18.0),
                                             child: Text(
-                                              "You didn't follow anyone yet",
+                                              "You didn't followings anyone yet",
                                               style: TextStyle(fontSize: 20, color: Colors.black),
                                             ),
                                           )

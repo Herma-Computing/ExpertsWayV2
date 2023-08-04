@@ -1,5 +1,6 @@
 import 'package:expertsway/routes/routing_constants.dart';
 import 'package:expertsway/services/api_controller.dart';
+import 'package:expertsway/services/follow_unfollow_controller.dart';
 import 'package:expertsway/theme/box_icons_icons.dart';
 import 'package:expertsway/theme/theme.dart';
 import 'package:expertsway/ui/pages/landing_page/index.dart' hide CardWidget;
@@ -29,6 +30,7 @@ class LeaderBoardPage extends StatefulWidget {
 }
 
 class LeaderBoardPageState extends State<LeaderBoardPage> {
+   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
   TextEditingController controller = TextEditingController();
   late bool local;
   LandingPageController landingPageController = Get.find();
@@ -440,8 +442,8 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 44,
-            child: SearchTextField(
-              trailingIcon: const Icon(
+            child: const SearchTextField(
+              trailingIcon: Icon(
                 Icons.display_settings,
                 color: Colors.grey,
               ),
@@ -530,7 +532,8 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
                 onTap: ()async{
                      
                 //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
-                 print("hji  ${leaderboardData[index]['username']}");
+                //  print("hji  ${leaderboardData[index]['username']}");
+                   followUnfollowController.getUserNmae();
                        Get.toNamed(AppRoute.otherProfilePage, 
                     
                        arguments: {

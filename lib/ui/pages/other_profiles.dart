@@ -2,9 +2,11 @@ import 'package:expertsway/ui/pages/landing_page/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../services/api_controller.dart';
 
+import '../../api/shared_preference/shared_preference.dart';
 import '../../models/other_profile_model.dart';
 import '../../services/follow_unfollow_controller.dart';
 import '../widgets/card.dart';
@@ -25,8 +27,10 @@ class _OtherProfileState extends State<OtherProfile> {
   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
 
   List<OtherProfileModels> otherProfileInfo = [];
+
   @override
   void initState() {
+    followUnfollowController.getUserNmae();
     followUnfollowController.IsFollow(Get.arguments["username"]);
     widget.userName = Get.arguments["username"];
     controller.getProfileDetails();
@@ -35,6 +39,7 @@ class _OtherProfileState extends State<OtherProfile> {
 
   Widget build(BuildContext context) {
     ApiProvider provider = ApiProvider();
+    print("gi${followUnfollowController.userNames}");
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -53,6 +58,7 @@ class _OtherProfileState extends State<OtherProfile> {
         ),
         body: FutureBuilder<OtherProfileModels>(
             future: provider.fetchOtherProfileInformation(widget.userName),
+
             //future: provider.fetchOtherProfileInformation("esubalew"), //this is for testing
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -62,7 +68,7 @@ class _OtherProfileState extends State<OtherProfile> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(left: 30, top:150),
+                        padding: EdgeInsets.only(left: 30, top: 150),
                         child: Text("something went wrong please try agin latter "),
                       ),
                       const SizedBox(
@@ -106,41 +112,45 @@ class _OtherProfileState extends State<OtherProfile> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 130, bottom: 30),
-                              child: Row(
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(Icons.check_circle),
-                                  ),
-                                  GetBuilder<FollowUnfollowController>(
-                                    builder: (controller) => ElevatedButton(
-                                        onPressed: () {
-                                          if (controller.isfollowOrunfollow == true) {
-                                            provider.unfollow(widget.userName);
-                                            followUnfollowController.IsFollow(widget.userName);
-                                          } else {
-                                            provider.follow(widget.userName);
-                                            followUnfollowController.IsFollow(widget.userName);
-                                          }
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.white,
+                            followUnfollowController.userNames == Get.arguments["username"]
+                                ? const Text("")
+                                : followUnfollowController.userNames == ""
+                                    ? const Text("something went wrong")
+                                    : Padding(
+                                        padding: const EdgeInsets.only(left: 130, bottom: 30),
+                                        child: Row(
+                                          children: [
+                                            const Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Icon(Icons.check_circle),
+                                            ),
+                                            GetBuilder<FollowUnfollowController>(
+                                              builder: (controller) => ElevatedButton(
+                                                  onPressed: () {
+                                                    if (controller.isfollowOrunfollow == true) {
+                                                      provider.unfollow(widget.userName);
+                                                      followUnfollowController.IsFollow(widget.userName);
+                                                    } else {
+                                                      provider.follow(widget.userName);
+                                                      followUnfollowController.IsFollow(widget.userName);
+                                                    }
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: Colors.white,
+                                                  ),
+                                                  child: controller.isfollowOrunfollow == true
+                                                      ? const Text(
+                                                          "following",
+                                                          style: TextStyle(color: Colors.black),
+                                                        )
+                                                      : const Text(
+                                                          "follow",
+                                                          style: TextStyle(color: Colors.black),
+                                                        )),
+                                            )
+                                          ],
                                         ),
-                                        child: controller.isfollowOrunfollow == true
-                                            ? const Text(
-                                                "following",
-                                                style: TextStyle(color: Colors.black),
-                                              )
-                                            : const Text(
-                                                "follow",
-                                                style: TextStyle(color: Colors.black),
-                                              )),
-                                  )
-                                ],
-                              ),
-                            ),
+                                      ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -644,7 +654,7 @@ class _OtherProfileState extends State<OtherProfile> {
                       ),
                     );
                   } else {
-                    return Text("user information is Empty");
+                    return const Text("user information is Empty");
                   }
                 }
               }

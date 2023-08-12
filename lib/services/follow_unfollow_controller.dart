@@ -8,10 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FollowUnfollowController extends GetxController {
   late bool isFollowing=true;
   bool followers=true;
+    bool isYou=false;
   late  String userName;
 
   bool get isfollowOrunfollow => isFollowing;
   bool get getfollowers => followers;
+   bool get checkIsYou => isYou;
    String  get userNames => userName;
   Future<OtherProfileModels> IsFollow(String username) async {
 
@@ -49,12 +51,20 @@ class FollowUnfollowController extends GetxController {
     followers=false;
     update();
   }
-
+Itisyou() {
+    isYou = true;
+    update();
+  }
+  itisnotYou(){
+    isYou = false;
+    update();
+  }
 
   
 Future getUserNmae() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
    userName=await prefs.getString("username")??"";
    update();
+   
   }
 }

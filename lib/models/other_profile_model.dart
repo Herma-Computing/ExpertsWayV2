@@ -4,7 +4,7 @@ import 'following_models.dart';
 class OtherProfileModels {
   String first_name;
   String last_name;
-  bool is_following;
+  bool  is_following;
   String avatar_url;
   String occupation;
   String birthdate;

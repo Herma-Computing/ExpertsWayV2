@@ -19,11 +19,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/other_profile_model.dart';
 import '../../../services/api_controller.dart';
+import '../../../services/follow_unfollow_controller.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/color.dart';
 
 ApiProvider provider = ApiProvider();
-
+final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
 class LandingPage extends GetView<LandingPageController> {
   const LandingPage({super.key});
 
@@ -336,6 +337,7 @@ class CustomAppBar extends AppBar {
               child: InkResponse(
                   radius: 25,
                   onTap: () {
+                    followUnfollowController.getUserNmae();
                     if (scaffoldKey != null) {
                       scaffoldKey.currentState?.openDrawer();
                     }
@@ -765,7 +767,11 @@ class DrawerHeader extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   Navigator.pop(context);
-                  Get.toNamed('/profile');
+                     
+                 followUnfollowController.Itisyou();
+                  Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                    'username': followUnfollowController.userNames,
+                  });
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
@@ -789,7 +795,11 @@ class DrawerHeader extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.pop(context);
-              Get.toNamed('/profile');
+     
+               followUnfollowController.Itisyou();
+              Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                'username': followUnfollowController.userNames,
+              });
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

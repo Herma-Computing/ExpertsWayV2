@@ -24,7 +24,7 @@ final pages = [
   GetPage(name: AppRoute.videoPage, page: () => const VideoPage()),
   GetPage(
       name: AppRoute.landingPage,
-      page: () => const LandingPage(),
+      page: () =>  LandingPage(),
       binding: BindingsBuilder(() {
         Get.put(LandingPageController());
       })),

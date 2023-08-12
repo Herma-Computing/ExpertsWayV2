@@ -8,12 +8,16 @@ import '../../../services/api_controller.dart';
 
 import '../../api/shared_preference/shared_preference.dart';
 import '../../models/other_profile_model.dart';
+import '../../routes/routing_constants.dart';
 import '../../services/follow_unfollow_controller.dart';
 import '../widgets/card.dart';
 import 'navmenu/menu_dashboard_layout.dart';
 
+final LandingPageController Pagescontroller = Get.put(LandingPageController());
+
 class OtherProfile extends StatefulWidget {
   late String userName;
+
   OtherProfile({Key? key}) : super(key: key);
 
   @override
@@ -23,7 +27,6 @@ class OtherProfile extends StatefulWidget {
 class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
 
-  final LandingPageController controller = Get.put(LandingPageController());
   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
 
   List<OtherProfileModels> otherProfileInfo = [];
@@ -33,23 +36,23 @@ class _OtherProfileState extends State<OtherProfile> {
     followUnfollowController.getUserNmae();
     followUnfollowController.IsFollow(Get.arguments["username"]);
     widget.userName = Get.arguments["username"];
-    controller.getProfileDetails();
+    Pagescontroller.getProfileDetails();
     super.initState();
   }
 
   Widget build(BuildContext context) {
     ApiProvider provider = ApiProvider();
-    print("gi${followUnfollowController.userNames}");
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 216, 211, 211),
-          title: const Padding(
-            padding: EdgeInsets.all(55.0),
+          title: Padding(
+            padding: const EdgeInsets.all(55.0),
             child: Text(
-              "User Profiles",
-              style: TextStyle(
+              "@${widget.userName}",
+              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -63,7 +66,6 @@ class _OtherProfileState extends State<OtherProfile> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
-                  print(snapshot.error);
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -112,45 +114,47 @@ class _OtherProfileState extends State<OtherProfile> {
                             const SizedBox(
                               height: 20,
                             ),
-                            followUnfollowController.userNames == Get.arguments["username"]
-                                ? const Text("")
-                                : followUnfollowController.userNames == ""
-                                    ? const Text("something went wrong")
-                                    : Padding(
-                                        padding: const EdgeInsets.only(left: 130, bottom: 30),
-                                        child: Row(
-                                          children: [
-                                            const Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Icon(Icons.check_circle),
+                            followUnfollowController.checkIsYou == true
+                                ? Text("")
+                                : followUnfollowController.userNames == Get.arguments["username"]
+                                    ? const Text("")
+                                    : followUnfollowController.userNames == ""
+                                        ? const Text("something went wrong")
+                                        : Padding(
+                                            padding: const EdgeInsets.only(left: 130, bottom: 30),
+                                            child: Row(
+                                              children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Icon(Icons.check_circle),
+                                                ),
+                                                GetBuilder<FollowUnfollowController>(
+                                                  builder: (controller) => ElevatedButton(
+                                                      onPressed: () {
+                                                        if (controller.isfollowOrunfollow == true) {
+                                                          provider.unfollow(widget.userName);
+                                                          followUnfollowController.IsFollow(widget.userName);
+                                                        } else {
+                                                          provider.follow(widget.userName);
+                                                          followUnfollowController.IsFollow(widget.userName);
+                                                        }
+                                                      },
+                                                      style: ElevatedButton.styleFrom(
+                                                        primary: Colors.white,
+                                                      ),
+                                                      child: controller.isfollowOrunfollow == true
+                                                          ? const Text(
+                                                              "following",
+                                                              style: TextStyle(color: Colors.black),
+                                                            )
+                                                          : const Text(
+                                                              "follow",
+                                                              style: TextStyle(color: Colors.black),
+                                                            )),
+                                                )
+                                              ],
                                             ),
-                                            GetBuilder<FollowUnfollowController>(
-                                              builder: (controller) => ElevatedButton(
-                                                  onPressed: () {
-                                                    if (controller.isfollowOrunfollow == true) {
-                                                      provider.unfollow(widget.userName);
-                                                      followUnfollowController.IsFollow(widget.userName);
-                                                    } else {
-                                                      provider.follow(widget.userName);
-                                                      followUnfollowController.IsFollow(widget.userName);
-                                                    }
-                                                  },
-                                                  style: ElevatedButton.styleFrom(
-                                                    primary: Colors.white,
-                                                  ),
-                                                  child: controller.isfollowOrunfollow == true
-                                                      ? const Text(
-                                                          "following",
-                                                          style: TextStyle(color: Colors.black),
-                                                        )
-                                                      : const Text(
-                                                          "follow",
-                                                          style: TextStyle(color: Colors.black),
-                                                        )),
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                          ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -543,48 +547,69 @@ class _OtherProfileState extends State<OtherProfile> {
                                             shrinkWrap: true,
                                             itemCount: snapshot.data!.followers.length,
                                             itemBuilder: (context, index) {
-                                              return Container(
-                                                height: 70,
-                                                width: MediaQuery.of(context).size.width - 16,
-                                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
-                                                child: CardWidget(
-                                                  gradient: false,
-                                                  button: false,
-                                                  height: 60,
-                                                  color: backgroundColor,
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      const Spacer(flex: 1),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
+                                              return InkWell(
+                                                onTap: () {
+                                                
+
+                                                  Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {
+                                                    'username': snapshot.data!.first_name,
+                                                  });
+                                                },
+                                                child: Container(
+                                                  height: 70,
+                                                  width: MediaQuery.of(context).size.width - 16,
+                                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+                                                  child: CardWidget(
+                                                    gradient: false,
+                                                    button: false,
+                                                    height: 60,
+                                                    color: backgroundColor,
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text(
                                                           "${index + 1}.",
                                                           style: const TextStyle(fontSize: 16, color: Colors.black),
                                                         ),
-                                                      ),
-                                                      const Spacer(flex: 2),
-                                                      CircleAvatar(
-                                                        minRadius: 22,
-                                                        maxRadius: 22,
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(100),
-                                                          child: Image.network(
-                                                            snapshot.data!.followers[index].avator_url,
-                                                            fit: BoxFit.cover,
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        CircleAvatar(
+                                                          minRadius: 22,
+                                                          maxRadius: 22,
+                                                          child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.network(
+                                                              snapshot.data!.followers[index].avator_url,
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      const Spacer(flex: 2),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text(
                                                           snapshot.data!.followers[index].first_name,
                                                           style: const TextStyle(fontSize: 16, color: Colors.black),
                                                           overflow: TextOverflow.fade,
                                                         ),
-                                                      ),
-                                                      const Spacer(flex: 5),
-                                                    ],
+                                                        const SizedBox(
+                                                          width: 30,
+                                                        ),
+                                                        snapshot.data!.is_following == true
+                                                            ? const Text("following")
+                                                            : TextButton(
+                                                                onPressed: () {},
+                                                                child: const Text("follow", style: TextStyle(color: Colors.white, fontSize: 15)),
+                                                              ),
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Expanded(child: Container()),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               );
@@ -601,48 +626,66 @@ class _OtherProfileState extends State<OtherProfile> {
                                             shrinkWrap: true,
                                             itemCount: snapshot.data!.followings.length,
                                             itemBuilder: (context, index) {
-                                              return Container(
-                                                height: 70,
-                                                width: MediaQuery.of(context).size.width - 16,
-                                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
-                                                child: CardWidget(
-                                                  gradient: false,
-                                                  button: false,
-                                                  height: 60,
-                                                  color: backgroundColor,
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      const Spacer(flex: 1),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
+                                              return InkWell(
+                                                onTap: () {
+                                                  Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {
+                                                    'username': snapshot.data!.first_name,
+                                                  });
+                                                },
+                                                child: Container(
+                                                  height: 70,
+                                                  width: MediaQuery.of(context).size.width - 16,
+                                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+                                                  child: CardWidget(
+                                                    gradient: false,
+                                                    button: false,
+                                                    height: 60,
+                                                    color: backgroundColor,
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text(
                                                           "${index + 1}.",
                                                           style: const TextStyle(fontSize: 16, color: Colors.black),
                                                         ),
-                                                      ),
-                                                      const Spacer(flex: 2),
-                                                      CircleAvatar(
-                                                        minRadius: 22,
-                                                        maxRadius: 22,
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(100),
-                                                          child: Image.network(
-                                                            snapshot.data!.followings[index].avator_url,
-                                                            fit: BoxFit.cover,
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        CircleAvatar(
+                                                          minRadius: 22,
+                                                          maxRadius: 22,
+                                                          child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.network(
+                                                              snapshot.data!.followings[index].avator_url,
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      const Spacer(flex: 2),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Text(
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Text(
                                                           snapshot.data!.followings[index].first_name,
                                                           style: const TextStyle(fontSize: 16, color: Colors.black),
                                                           overflow: TextOverflow.fade,
                                                         ),
-                                                      ),
-                                                      const Spacer(flex: 5),
-                                                    ],
+                                                        snapshot.data!.is_following == true
+                                                            ? const Text("following")
+                                                            : TextButton(
+                                                                onPressed: () {},
+                                                                child: const Text(
+                                                                  "follow",
+                                                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                                                )),
+                                                        const SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Expanded(child: Container()),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               );

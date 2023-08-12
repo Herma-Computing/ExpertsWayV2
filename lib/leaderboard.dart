@@ -181,6 +181,7 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
                           );
                         }
                         if (snapshot.hasData) {
+                    
                           var data = local ? snapshot.data!['local']! : snapshot.data!['global']!;
                           return Stack(
                             alignment: Alignment.center,
@@ -530,14 +531,13 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
               var textColor = themeProvider.currentTheme == ThemeData.dark() ? Colors.white : Colors.black;
               return InkWell(
                 onTap: ()async{
-                     
-                //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
-                //  print("hji  ${leaderboardData[index]['username']}");
-                   followUnfollowController.getUserNmae();
+                    followUnfollowController.itisnotYou();
+                
                        Get.toNamed(AppRoute.otherProfilePage, 
                     
                        arguments: {
                           'username': leaderboardData[index]['username'],
+             
                           
                         });
                        

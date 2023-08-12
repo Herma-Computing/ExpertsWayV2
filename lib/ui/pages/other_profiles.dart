@@ -598,6 +598,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                                         const SizedBox(
                                                           width: 30,
                                                         ),
+                                                         Expanded(child: Container()),
                                                         snapshot.data!.is_following == true
                                                             ? const Text("following")
                                                             : TextButton(
@@ -607,7 +608,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                                         const SizedBox(
                                                           width: 15,
                                                         ),
-                                                        Expanded(child: Container()),
+                                                       
                                                       ],
                                                     ),
                                                   ),

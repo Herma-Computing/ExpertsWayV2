@@ -532,8 +532,7 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
               return InkWell(
                 onTap: ()async{
                     followUnfollowController.itisnotYou();
-                
-                       Get.toNamed(AppRoute.otherProfilePage, 
+                  Get.toNamed(AppRoute.otherProfilePage, 
                     
                        arguments: {
                           'username': leaderboardData[index]['username'],

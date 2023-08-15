@@ -152,8 +152,8 @@ class _MenuState extends State<Menu> {
                       flex: 3,
                     ),
                     
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         Padding(
                           padding: EdgeInsets.only(right: 20.0),
                           child: Icon(
@@ -174,8 +174,8 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                     const Spacer(flex: 2),
-                    Row(
-                      children: const <Widget>[
+                    const Row(
+                      children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 20.0),
                           child: Icon(
@@ -196,8 +196,8 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                     const Spacer(flex: 2),
-                    Row(
-                      children: const <Widget>[
+                    const Row(
+                      children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 20.0),
                           child: Icon(
@@ -218,8 +218,8 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                     const Spacer(flex: 2),
-                    Row(
-                      children: const <Widget>[
+                    const Row(
+                      children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 20.0),
                           child: Icon(
@@ -240,8 +240,8 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                     const Spacer(flex: 2),
-                    Row(
-                      children: const <Widget>[
+                    const Row(
+                      children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 20.0),
                           child: Icon(
@@ -279,8 +279,8 @@ class _MenuState extends State<Menu> {
                               builder: (context) => const Settings()),
                         );
                       },
-                      child: Row(
-                        children: const <Widget>[
+                      child: const Row(
+                        children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(right: 20.0),
                             child: Icon(
@@ -311,8 +311,8 @@ class _MenuState extends State<Menu> {
                               builder: (context) => const n.Notification()),
                         );
                       },
-                      child: Row(
-                        children: const <Widget>[
+                      child: const Row(
+                        children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(right: 20.0),
                             child: Icon(

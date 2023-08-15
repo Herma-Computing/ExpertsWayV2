@@ -4,18 +4,18 @@ import 'following_models.dart';
 class OtherProfileModels {
   String first_name;
   String last_name;
-  bool  is_following;
+  bool is_following;
   String avatar_url;
   String occupation;
   String birthdate;
   List perfered_languages;
   String country;
-  List followers;
-  List followings;
+  List<FollowersList>? followers;
+  List<FollowingList>? followings;
   OtherProfileModels({
     required this.first_name,
     required this.last_name,
-    required bool this.is_following,
+    required this.is_following,
     required this.avatar_url,
     required this.occupation,
     required this.birthdate,
@@ -35,8 +35,8 @@ class OtherProfileModels {
       birthdate: json['birthdate'] as String,
       perfered_languages: json['perfered_languages'],
       country: json['country'] as String,
-      followers: json['followers']==null?[]: json['followers'].map((content) => followersList.fromJson(content)).toList(),
-      followings: json['followings']==null?[]:json['followings'].map((content) => FollowingList.fromJson(content)).toList(),
+      followers: json['followers'] == [] ? [] : (json['followers'] as List) .map((content) => FollowersList.fromJson(content)).toList(),
+      followings: json['followings'] == [] ? [] : (json['followings'] as List).map((content) => FollowingList.fromJson(content)).toList(),
     );
   }
   Map<String, dynamic> tojson() {

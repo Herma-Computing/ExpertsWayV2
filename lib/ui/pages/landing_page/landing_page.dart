@@ -768,7 +768,7 @@ class DrawerHeader extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                      
-                 followUnfollowController.Itisyou();
+                 followUnfollowController.itisyou();
                   Get.toNamed(AppRoute.otherProfilePage, arguments: {
                     'username': followUnfollowController.userNames,
                   });
@@ -796,7 +796,7 @@ class DrawerHeader extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
      
-               followUnfollowController.Itisyou();
+               followUnfollowController.itisyou();
               Get.toNamed(AppRoute.otherProfilePage, arguments: {
                 'username': followUnfollowController.userNames,
               });

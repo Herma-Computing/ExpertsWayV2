@@ -1,17 +1,22 @@
 import 'package:expertsway/ui/pages/landing_page/controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:expertsway/utils/color.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../services/api_controller.dart';
 
 import '../../api/shared_preference/shared_preference.dart';
+import '../../models/lesson.dart';
 import '../../models/other_profile_model.dart';
 import '../../routes/routing_constants.dart';
 import '../../services/follow_unfollow_controller.dart';
 import '../widgets/card.dart';
+import 'contributions/my_contributions.dart';
 import 'navmenu/menu_dashboard_layout.dart';
+import 'package:expertsway/theme/box_icons_icons.dart';
 
 final LandingPageController Pagescontroller = Get.put(LandingPageController());
 
@@ -26,7 +31,8 @@ class OtherProfile extends StatefulWidget {
 
 class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
-
+  late Lesson lesson;
+  bool isloading = true;
   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
 
   List<OtherProfileModels> otherProfileInfo = [];
@@ -37,12 +43,77 @@ class _OtherProfileState extends State<OtherProfile> {
     followUnfollowController.IsFollow(Get.arguments["username"]);
     widget.userName = Get.arguments["username"];
     Pagescontroller.getProfileDetails();
+    getValue();
     super.initState();
+  }
+
+  getValue() async {
+    lesson = await ApiProvider().getMyContributions();
+
+    setState(() {
+      isloading = false;
+    });
+  }
+
+  Widget _container(String? title, String? description, LessonElement lesons) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return Material(
+      color: Colors.white,
+      child: Container(
+          margin: const EdgeInsets.only(left: 10, right: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                color: Color.fromARGB(54, 188, 187, 187),
+                blurRadius: 10,
+                offset: Offset(1, 1),
+              ),
+            ],
+          ),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              dividerColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iconTheme: const IconThemeData(
+                size: 35,
+              ),
+            ),
+            child: ListTile(
+              onTap: () async {
+                // await Get.to(
+                //   () => LessonPage(
+                //     lessonData: controller.lessonData,
+                //     lesson: lesons, // this is LessonElement
+                //     contents: lessonContents,
+                //     courseData: controller.courseData,
+                //   ),
+                // );
+              },
+              title: Padding(
+                padding: const EdgeInsets.only(left: 100),
+                child: Text(
+                  title!,
+                  style: textTheme.bodyMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                ),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Html(
+                  data: description,
+                ),
+              ),
+            ),
+          )),
+    );
   }
 
   Widget build(BuildContext context) {
     ApiProvider provider = ApiProvider();
-
+    TextTheme textTheme = Theme.of(context).textTheme;
+    IconThemeData icon = Theme.of(context).iconTheme;
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -535,7 +606,7 @@ class _OtherProfileState extends State<OtherProfile> {
                               padding: const EdgeInsets.all(18.0),
                               child: GetBuilder<FollowUnfollowController>(
                                 builder: (controller) => controller.getfollowers == true
-                                    ? snapshot.data!.followers.isEmpty
+                                    ? snapshot.data!.followers!.isEmpty
                                         ? const Padding(
                                             padding: const EdgeInsets.all(18.0),
                                             child: Text(
@@ -545,14 +616,12 @@ class _OtherProfileState extends State<OtherProfile> {
                                           )
                                         : ListView.builder(
                                             shrinkWrap: true,
-                                            itemCount: snapshot.data!.followers.length,
+                                            itemCount: snapshot.data!.followers!.length,
                                             itemBuilder: (context, index) {
                                               return InkWell(
                                                 onTap: () {
-                                                
-
                                                   Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {
-                                                    'username': snapshot.data!.first_name,
+                                                    'username': snapshot.data!.followers![index].username,
                                                   });
                                                 },
                                                 child: Container(
@@ -582,7 +651,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                                           child: ClipRRect(
                                                             borderRadius: BorderRadius.circular(100),
                                                             child: Image.network(
-                                                              snapshot.data!.followers[index].avator_url,
+                                                              snapshot.data!.followers![index].avatorUrl,
                                                               fit: BoxFit.cover,
                                                             ),
                                                           ),
@@ -591,14 +660,14 @@ class _OtherProfileState extends State<OtherProfile> {
                                                           width: 15,
                                                         ),
                                                         Text(
-                                                          snapshot.data!.followers[index].first_name,
+                                                          snapshot.data!.followers![index].firstName,
                                                           style: const TextStyle(fontSize: 16, color: Colors.black),
                                                           overflow: TextOverflow.fade,
                                                         ),
                                                         const SizedBox(
                                                           width: 30,
                                                         ),
-                                                         Expanded(child: Container()),
+                                                        Expanded(child: Container()),
                                                         snapshot.data!.is_following == true
                                                             ? const Text("following")
                                                             : TextButton(
@@ -608,14 +677,13 @@ class _OtherProfileState extends State<OtherProfile> {
                                                         const SizedBox(
                                                           width: 15,
                                                         ),
-                                                       
                                                       ],
                                                     ),
                                                   ),
                                                 ),
                                               );
                                             })
-                                    : snapshot.data!.followings.isEmpty
+                                    : snapshot.data!.followings!.isEmpty
                                         ? const Padding(
                                             padding: const EdgeInsets.all(18.0),
                                             child: Text(
@@ -625,12 +693,12 @@ class _OtherProfileState extends State<OtherProfile> {
                                           )
                                         : ListView.builder(
                                             shrinkWrap: true,
-                                            itemCount: snapshot.data!.followings.length,
+                                            itemCount: snapshot.data!.followings!.length,
                                             itemBuilder: (context, index) {
                                               return InkWell(
                                                 onTap: () {
                                                   Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {
-                                                    'username': snapshot.data!.first_name,
+                                                    'username': snapshot.data!.followings![index].username,
                                                   });
                                                 },
                                                 child: Container(
@@ -660,7 +728,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                                           child: ClipRRect(
                                                             borderRadius: BorderRadius.circular(100),
                                                             child: Image.network(
-                                                              snapshot.data!.followings[index].avator_url,
+                                                              snapshot.data!.followings![index].avatorUrl,
                                                               fit: BoxFit.cover,
                                                             ),
                                                           ),
@@ -669,10 +737,11 @@ class _OtherProfileState extends State<OtherProfile> {
                                                           width: 15,
                                                         ),
                                                         Text(
-                                                          snapshot.data!.followings[index].first_name,
+                                                          snapshot.data!.followings![index].firstName,
                                                           style: const TextStyle(fontSize: 16, color: Colors.black),
                                                           overflow: TextOverflow.fade,
                                                         ),
+                                                        Expanded(child: Container()),
                                                         snapshot.data!.is_following == true
                                                             ? const Text("following")
                                                             : TextButton(
@@ -684,7 +753,6 @@ class _OtherProfileState extends State<OtherProfile> {
                                                         const SizedBox(
                                                           width: 15,
                                                         ),
-                                                        Expanded(child: Container()),
                                                       ],
                                                     ),
                                                   ),
@@ -693,6 +761,98 @@ class _OtherProfileState extends State<OtherProfile> {
                                             }),
                               ),
                             ),
+                            isloading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                                  ))
+                                : Column(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 40, left: 5, right: 25),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CupertinoButton(
+                                              padding: const EdgeInsets.all(0),
+                                              child: Icon(
+                                                Icons.chevron_left,
+                                                color: icon.color,
+                                                size: 35,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            Text(
+                                              'My Contributions',
+                                              textAlign: TextAlign.end,
+                                              style: textTheme.displayLarge?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                                            ),
+                                            SizedBox(
+                                              height: 25,
+                                              width: 25,
+                                              child: CupertinoButton(
+                                                padding: const EdgeInsets.only(left: 3),
+                                                child: const Icon(
+                                                  Icons.search,
+                                                  color: Colors.grey,
+                                                  size: 30,
+                                                ),
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Stack(
+                                        children: <Widget>[
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              ListView.separated(
+                                                scrollDirection: Axis.vertical,
+                                                shrinkWrap: true,
+                                                itemCount: lesson.lessons.length,
+                                                itemBuilder: (context, index) {
+                                                  return _container(
+                                                    lesson.lessons[index]?.title.toString(),
+                                                    lesson.lessons[index]?.shortDescription.toString(),
+                                                    lesson.lessons[index]!,
+                                                  );
+                                                },
+                                                separatorBuilder: (context, index) {
+                                                  return const SizedBox(height: 20);
+                                                },
+                                              ),
+                                            const   Image(
+                                                  image: ResizeImage(
+                                                AssetImage('assets/images/helpbackground.PNG'),
+                                                width: 300,
+                                                height: 200,
+                                              )),
+                                              SizedBox(height: 20),
+                                             const  Text(
+                                                "Success leaves clues.",
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(255, 193, 193, 194),
+                                                ),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Study People you admire or want to be like.",
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(255, 193, 193, 194),
+                                                ),
+                                              ),
+                                              SizedBox(height: 50),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                           ],
                         ),
                       ),

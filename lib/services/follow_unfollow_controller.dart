@@ -6,17 +6,16 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FollowUnfollowController extends GetxController {
-  late bool isFollowing=true;
-  bool followers=true;
-    bool isYou=false;
-  late  String userName;
+  late bool isFollowing = true;
+  bool followers = true;
+  bool isYou = false;
+  late String userName;
 
   bool get isfollowOrunfollow => isFollowing;
   bool get getfollowers => followers;
-   bool get checkIsYou => isYou;
-   String  get userNames => userName;
+  bool get checkIsYou => isYou;
+  String get userNames => userName;
   Future<OtherProfileModels> IsFollow(String username) async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late OtherProfileModels datas;
 
@@ -25,13 +24,12 @@ class FollowUnfollowController extends GetxController {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       var response = await dio.get("${AppUrl.fetchOtherProfileInformation}/$username");
-     
+
       if (response.data != null) {
         if (response.statusCode == 200) {
           datas = OtherProfileModels.fromJson(response.data);
           isFollowing = datas.is_following;
           update();
-          
         } else {
           throw Exception('Failed to create album.');
         }
@@ -43,28 +41,30 @@ class FollowUnfollowController extends GetxController {
     }
     return datas;
   }
-  seeFollowers(){
-    followers=true;
+
+  seeFollowers() {
+    followers = true;
     update();
   }
-  seeFollowing(){
-    followers=false;
+
+  seeFollowing() {
+    followers = false;
     update();
   }
-Itisyou() {
+
+  itisyou() {
     isYou = true;
     update();
   }
-  itisnotYou(){
+
+  itisnotYou() {
     isYou = false;
     update();
   }
 
-  
-Future getUserNmae() async {
+  Future getUserNmae() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-   userName=await prefs.getString("username")??"";
-   update();
-   
+    userName = await prefs.getString("username") ?? "";
+    update();
   }
 }

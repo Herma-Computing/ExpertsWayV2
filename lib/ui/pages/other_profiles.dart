@@ -826,14 +826,14 @@ class _OtherProfileState extends State<OtherProfile> {
                                                   return const SizedBox(height: 20);
                                                 },
                                               ),
-                                            const   Image(
+                                              const Image(
                                                   image: ResizeImage(
                                                 AssetImage('assets/images/helpbackground.PNG'),
                                                 width: 300,
                                                 height: 200,
                                               )),
                                               SizedBox(height: 20),
-                                             const  Text(
+                                              const Text(
                                                 "Success leaves clues.",
                                                 style: TextStyle(
                                                   color: Color.fromARGB(255, 193, 193, 194),

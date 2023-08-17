@@ -4,26 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../services/api_controller.dart';
 
-import '../../api/shared_preference/shared_preference.dart';
 import '../../models/lesson.dart';
 import '../../models/other_profile_model.dart';
 import '../../routes/routing_constants.dart';
 import '../../services/follow_unfollow_controller.dart';
 import '../widgets/card.dart';
-import 'contributions/my_contributions.dart';
 import 'navmenu/menu_dashboard_layout.dart';
-import 'package:expertsway/theme/box_icons_icons.dart';
 
-final LandingPageController Pagescontroller = Get.put(LandingPageController());
+final LandingPageController landingPagesController = Get.put(LandingPageController());
 
 class OtherProfile extends StatefulWidget {
-  late String userName;
-
   OtherProfile({Key? key}) : super(key: key);
+
+  late String userName;
 
   @override
   State<OtherProfile> createState() => _OtherProfileState();
@@ -42,7 +38,7 @@ class _OtherProfileState extends State<OtherProfile> {
     followUnfollowController.getUserNmae();
     followUnfollowController.IsFollow(Get.arguments["username"]);
     widget.userName = Get.arguments["username"];
-    Pagescontroller.getProfileDetails();
+    landingPagesController.getProfileDetails();
     getValue();
     super.initState();
   }
@@ -112,8 +108,6 @@ class _OtherProfileState extends State<OtherProfile> {
 
   Widget build(BuildContext context) {
     ApiProvider provider = ApiProvider();
-    TextTheme textTheme = Theme.of(context).textTheme;
-    IconThemeData icon = Theme.of(context).iconTheme;
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -610,7 +604,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                         ? const Padding(
                                             padding: const EdgeInsets.all(18.0),
                                             child: Text(
-                                              "You don't have any followers",
+                                              "No followers found!",
                                               style: TextStyle(fontSize: 20, color: Colors.black),
                                             ),
                                           )
@@ -685,9 +679,9 @@ class _OtherProfileState extends State<OtherProfile> {
                                             })
                                     : snapshot.data!.followings!.isEmpty
                                         ? const Padding(
-                                            padding: const EdgeInsets.all(18.0),
+                                            padding: EdgeInsets.all(18.0),
                                             child: Text(
-                                              "You didn't followings anyone yet",
+                                              "No followings found!",
                                               style: TextStyle(fontSize: 20, color: Colors.black),
                                             ),
                                           )
@@ -770,39 +764,9 @@ class _OtherProfileState extends State<OtherProfile> {
                                     children: [
                                       Container(
                                         margin: const EdgeInsets.only(top: 40, left: 5, right: 25),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CupertinoButton(
-                                              padding: const EdgeInsets.all(0),
-                                              child: Icon(
-                                                Icons.chevron_left,
-                                                color: icon.color,
-                                                size: 35,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                            Text(
-                                              'My Contributions',
-                                              textAlign: TextAlign.end,
-                                              style: textTheme.displayLarge?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
-                                            ),
-                                            SizedBox(
-                                              height: 25,
-                                              width: 25,
-                                              child: CupertinoButton(
-                                                padding: const EdgeInsets.only(left: 3),
-                                                child: const Icon(
-                                                  Icons.search,
-                                                  color: Colors.grey,
-                                                  size: 30,
-                                                ),
-                                                onPressed: () {},
-                                              ),
-                                            ),
-                                          ],
+                                        child: const Text(
+                                          "Contributed Lessons",
+                                          style: TextStyle(fontSize: 20),
                                         ),
                                       ),
                                       Stack(

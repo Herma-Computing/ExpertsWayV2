@@ -6,13 +6,13 @@ import 'package:expertsway/models/auth_model.dart';
 import 'package:expertsway/models/course.dart';
 import 'package:expertsway/models/lesson.dart';
 import 'package:expertsway/models/programming_language.dart';
+import 'package:expertsway/services/user_search_controller.dart';
 import 'package:expertsway/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' as getx;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../api/shared_preference/shared_preference.dart';
 import '../models/contributor_lesson.dart';
-
 import '../models/other_profile_model.dart';
 import '../models/profile.dart';
 
@@ -45,6 +45,7 @@ class ApiProvider {
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> fetchLeaderboardData() async {
+    UserSearchController userSearchController = getx.Get.put(UserSearchController());
     var dio = Dio();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? country = prefs.getString("country");
@@ -52,9 +53,11 @@ class ApiProvider {
     String url = "${AppUrl.leaderboard}${country != null ? "?country=$country" : ""}";
     Response response = await dio.get(url);
     if (response.statusCode == 200) {
-      // List<Map> data = (response.data as List).map((e) => e as Map).toList();
       Map<String, List<Map<String, dynamic>>> data =
           (response.data as Map).map((key, value) => MapEntry(key as String, (value as List).map((e) => e as Map<String, dynamic>).toList()));
+      userSearchController.localUser(data['local']);
+      userSearchController.globalUser(data['global']);
+
       return data;
     } else {
       throw Exception("Problem occurred while trying to fetch leaderboard data");
@@ -590,7 +593,6 @@ class ApiProvider {
   }
 
   Future<OtherProfileModels> fetchOtherProfileInformation(String username) async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late OtherProfileModels userdatas;
 
@@ -599,8 +601,8 @@ class ApiProvider {
     dio.options.headers["Authorization"] = "Bearer ${prefs.getString("token")}";
     try {
       Response response = await dio.get("${AppUrl.fetchOtherProfileInformation}/$username");
-   
-         if (response.data != null) {
+
+      if (response.data != null) {
         if (response.statusCode == 200) {
           userdatas = OtherProfileModels.fromJson(response.data);
           return OtherProfileModels.fromJson(response.data);
@@ -649,7 +651,6 @@ class ApiProvider {
     try {
       Response response = await dio.post("${AppUrl.unfollow}/$username");
       dataReturned = response.data;
-     
 
       if (response.statusCode == 200) {
         return response.data;

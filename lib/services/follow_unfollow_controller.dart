@@ -16,6 +16,7 @@ class FollowUnfollowController extends GetxController {
   bool get checkIsYou => isYou;
   String get userNames => userName;
   Future<OtherProfileModels> IsFollow(String username) async {
+ 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late OtherProfileModels datas;
 

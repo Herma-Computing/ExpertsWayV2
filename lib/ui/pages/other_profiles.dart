@@ -1,5 +1,4 @@
 import 'package:expertsway/ui/pages/landing_page/controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:expertsway/utils/color.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -32,11 +31,59 @@ class _OtherProfileState extends State<OtherProfile> {
   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
 
   List<OtherProfileModels> otherProfileInfo = [];
+  final TextEditingController _filter = TextEditingController();
 
+  // for http requests
+  bool isSearch = false;
+  Icon _searchIcon = const Icon(Icons.search);
+  String _searchText = "";
+  Widget _appBarTitle = Text("");
+  
+   void _searchPressed() {
+    setState(() {
+      if (_searchIcon.icon == Icons.search) {
+        isSearch = true;
+        _searchIcon = const Icon(Icons.close);
+        _appBarTitle = TextField(
+          controller: _filter,
+          decoration: const InputDecoration(
+              prefixIcon: Icon(
+                Icons.search,
+                size: 20,
+              ),
+              hintText: 'Search by userName...'),
+              onSubmitted: (value) {
+                 Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {
+              'username': value
+            });
+          },
+        );
+      } else {
+        isSearch = false;
+        _searchIcon = const Icon(Icons.search);
+        _appBarTitle = Text(
+          "@${widget.userName}",
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        );
+        // filteredNames = userSearchController.globalAllUserNames;
+        _filter.clear();
+      }
+    });
+  }
   @override
-  void initState() {
+  void initState()  {
+        _appBarTitle = Text(
+      "@${Get.arguments["username"]}",
+      style: const TextStyle(
+        fontSize: 20,
+        color: Colors.black,
+      ),
+    );
     followUnfollowController.getUserNmae();
-    followUnfollowController.IsFollow(Get.arguments["username"]);
+  
     widget.userName = Get.arguments["username"];
     landingPagesController.getProfileDetails();
     getValue();
@@ -44,6 +91,7 @@ class _OtherProfileState extends State<OtherProfile> {
   }
 
   getValue() async {
+      await followUnfollowController.IsFollow(Get.arguments["username"]);
     lesson = await ApiProvider().getMyContributions();
 
     setState(() {
@@ -109,20 +157,19 @@ class _OtherProfileState extends State<OtherProfile> {
   Widget build(BuildContext context) {
     ApiProvider provider = ApiProvider();
     return Scaffold(
-        appBar: AppBar(
+              appBar: AppBar(
           automaticallyImplyLeading: true,
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 216, 211, 211),
-          title: Padding(
-            padding: const EdgeInsets.all(55.0),
-            child: Text(
-              "@${widget.userName}",
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-              ),
-            ),
-          ),
+          title: _appBarTitle,
+          actions: [
+            // Navigate to the Search Screen
+            IconButton(
+                onPressed: () {
+                  _searchPressed();
+                },
+                icon: _searchIcon)
+          ],
         ),
         body: FutureBuilder<OtherProfileModels>(
             future: provider.fetchOtherProfileInformation(widget.userName),
@@ -134,9 +181,9 @@ class _OtherProfileState extends State<OtherProfile> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 30, top: 150),
-                        child: Text("something went wrong please try agin latter "),
+                       Padding(
+                        padding:const  EdgeInsets.only(left: 30, top: 150),
+                        child:isSearch==true?const Text("Invalid UserName / something went wrong"):  Text("something went wrong please try agin latter"),
                       ),
                       const SizedBox(
                         height: 5,

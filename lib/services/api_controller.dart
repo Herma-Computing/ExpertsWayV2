@@ -589,7 +589,7 @@ class ApiProvider {
     );
   }
 
-  Future<OtherProfileModels> fetchOtherProfileInformation(String username) async {
+  Future<OtherProfileModels> fetchOtherProfileInformation(String username, ) async {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     late OtherProfileModels userdatas;

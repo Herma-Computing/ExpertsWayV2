@@ -30,7 +30,7 @@ class LeaderBoardPage extends StatefulWidget {
 }
 
 class LeaderBoardPageState extends State<LeaderBoardPage> {
-   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
+  final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
   TextEditingController controller = TextEditingController();
   late bool local;
   LandingPageController landingPageController = Get.find();
@@ -63,7 +63,6 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
   ];
   @override
   void initState() {
-    
     local = false;
     SharedPreferences.getInstance().then((value) => prefs = value);
     super.initState();
@@ -181,7 +180,6 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
                           );
                         }
                         if (snapshot.hasData) {
-                    
                           var data = local ? snapshot.data!['local']! : snapshot.data!['global']!;
                           return Stack(
                             alignment: Alignment.center,
@@ -264,23 +262,21 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
 
   Widget _buildTopThreeAvatars(BuildContext context, List<Map<dynamic, dynamic>> leaderboardData) {
     return InkWell(
-      onTap: ()async{
-         
-                //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
-                 
-                //        Get.toNamed(AppRoute.otherProfilePage, arguments: {
-                //           'firstName': value.first_name,
-                //           "lastName": value.last_name,
-                //           "isFollowing": value.is_following,
-                //           "ocupation": value.occupation,
-                //           "avatarUrl": value.avatar_url,
-                //           "birthDate": value.birthdate,
-                //           "country": value.country,
-                //           "preferedLanguges": value.perfered_languages,
-                //         }
-                        
-                //         );
-           
+      onTap: () async {
+        //  OtherProfileModels  value=  await  provider.fetchOtherProfileInformation();
+
+        //        Get.toNamed(AppRoute.otherProfilePage, arguments: {
+        //           'firstName': value.first_name,
+        //           "lastName": value.last_name,
+        //           "isFollowing": value.is_following,
+        //           "ocupation": value.occupation,
+        //           "avatarUrl": value.avatar_url,
+        //           "birthDate": value.birthdate,
+        //           "country": value.country,
+        //           "preferedLanguges": value.perfered_languages,
+        //         }
+
+        //         );
       },
       child: Container(
         padding: const EdgeInsets.only(top: 20),
@@ -510,7 +506,6 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
   }
 
   Widget _buildLeaderboardList(List<Map<dynamic, dynamic>> leaderboardData) {
-
     // the widget built by this method should be constrained externally. call this method in a SizedBox or something.
     final themeProvider = Provider.of<ThemeProvider>(context);
     return SingleChildScrollView(
@@ -530,18 +525,13 @@ class LeaderBoardPageState extends State<LeaderBoardPage> {
               }.call();
               var textColor = themeProvider.currentTheme == ThemeData.dark() ? Colors.white : Colors.black;
               return InkWell(
-                onTap: ()async{
-                    followUnfollowController.itisnotYou();
-                  Get.toNamed(AppRoute.otherProfilePage, 
-                    
-                       arguments: {
-                          'username': leaderboardData[index]['username'],
-             
-                          
-                        });
-                       
+                onTap: () async {
+                  followUnfollowController.itisnotYou();
+
+                  Get.toNamed(AppRoute.otherProfilePage, arguments: {
+                    'username': leaderboardData[index]['username'],
+                  });
                 },
-                
                 child: Container(
                   height: 70,
                   width: MediaQuery.of(context).size.width - 16,

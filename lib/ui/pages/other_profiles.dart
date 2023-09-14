@@ -10,6 +10,7 @@ import '../../models/lesson.dart';
 import '../../models/other_profile_model.dart';
 import '../../routes/routing_constants.dart';
 import '../../services/follow_unfollow_controller.dart';
+import '../../services/other_profile_page_controller.dart';
 import '../widgets/card.dart';
 import 'navmenu/menu_dashboard_layout.dart';
 
@@ -26,9 +27,10 @@ class OtherProfile extends StatefulWidget {
 
 class _OtherProfileState extends State<OtherProfile> {
   // final  UserPreferences prefs=UserPreferences();
-  late Lesson lesson;
-  bool isloading = true;
+  // late Lesson lesson;
+  // bool isloading = true;
   final FollowUnfollowController followUnfollowController = Get.put(FollowUnfollowController());
+  final otherProfilePageController otherProfilePageControllers = Get.put(otherProfilePageController());
 
   List<OtherProfileModels> otherProfileInfo = [];
   final TextEditingController _filter = TextEditingController();
@@ -38,8 +40,8 @@ class _OtherProfileState extends State<OtherProfile> {
   Icon _searchIcon = const Icon(Icons.search);
   String _searchText = "";
   Widget _appBarTitle = Text("");
-  
-   void _searchPressed() {
+
+  void _searchPressed() {
     setState(() {
       if (_searchIcon.icon == Icons.search) {
         isSearch = true;
@@ -52,10 +54,8 @@ class _OtherProfileState extends State<OtherProfile> {
                 size: 20,
               ),
               hintText: 'Search by userName...'),
-              onSubmitted: (value) {
-                 Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {
-              'username': value
-            });
+          onSubmitted: (value) {
+            Get.toNamed(AppRoute.otherProfilePage, preventDuplicates: false, arguments: {'username': value});
           },
         );
       } else {
@@ -73,9 +73,10 @@ class _OtherProfileState extends State<OtherProfile> {
       }
     });
   }
+
   @override
-  void initState()  {
-        _appBarTitle = Text(
+  void initState() {
+    _appBarTitle = Text(
       "@${Get.arguments["username"]}",
       style: const TextStyle(
         fontSize: 20,
@@ -83,20 +84,21 @@ class _OtherProfileState extends State<OtherProfile> {
       ),
     );
     followUnfollowController.getUserNmae();
-  
+
     widget.userName = Get.arguments["username"];
     landingPagesController.getProfileDetails();
-    getValue();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getValue();
+    });
     super.initState();
   }
 
   getValue() async {
-      await followUnfollowController.IsFollow(Get.arguments["username"]);
-    lesson = await ApiProvider().getMyContributions();
-
-    setState(() {
-      isloading = false;
-    });
+    await followUnfollowController.IsFollow(Get.arguments["username"]);
+    Lesson lesson = await ApiProvider().getMyContributions();
+    otherProfilePageControllers.getLeson(lesson);
+    otherProfilePageControllers.getisloading(false);
   }
 
   Widget _container(String? title, String? description, LessonElement lesons) {
@@ -157,7 +159,7 @@ class _OtherProfileState extends State<OtherProfile> {
   Widget build(BuildContext context) {
     ApiProvider provider = ApiProvider();
     return Scaffold(
-              appBar: AppBar(
+        appBar: AppBar(
           automaticallyImplyLeading: true,
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 216, 211, 211),
@@ -181,9 +183,11 @@ class _OtherProfileState extends State<OtherProfile> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                       Padding(
-                        padding:const  EdgeInsets.only(left: 30, top: 150),
-                        child:isSearch==true?const Text("Invalid UserName / something went wrong"):  Text("something went wrong please try agin latter"),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30, top: 150),
+                        child: isSearch == true
+                            ? const Text("Invalid UserName / something went wrong")
+                            : Text("something went wrong please try agin latter"),
                       ),
                       const SizedBox(
                         height: 5,
@@ -802,7 +806,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                             }),
                               ),
                             ),
-                            isloading
+                            otherProfilePageControllers.isloadings
                                 ? const Center(
                                     child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
@@ -822,36 +826,38 @@ class _OtherProfileState extends State<OtherProfile> {
                                             mainAxisAlignment: MainAxisAlignment.end,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              ListView.separated(
-                                                scrollDirection: Axis.vertical,
-                                                shrinkWrap: true,
-                                                itemCount: lesson.lessons.length,
-                                                itemBuilder: (context, index) {
-                                                  return _container(
-                                                    lesson.lessons[index]?.title.toString(),
-                                                    lesson.lessons[index]?.shortDescription.toString(),
-                                                    lesson.lessons[index]!,
-                                                  );
-                                                },
-                                                separatorBuilder: (context, index) {
-                                                  return const SizedBox(height: 20);
-                                                },
+                                              GetBuilder<otherProfilePageController>(
+                                                builder: (newController) => ListView.separated(
+                                                  scrollDirection: Axis.vertical,
+                                                  shrinkWrap: true,
+                                                  itemCount: newController.Lessons.lessons.length,
+                                                  itemBuilder: (context, index) {
+                                                    return _container(
+                                                      newController.Lessons.lessons[index]?.title.toString(),
+                                                      newController.Lessons.lessons[index]?.shortDescription.toString(),
+                                                      newController.Lessons.lessons[index]!,
+                                                    );
+                                                  },
+                                                  separatorBuilder: (context, index) {
+                                                    return const SizedBox(height: 20);
+                                                  },
+                                                ),
                                               ),
-                                            const   Image(
+                                              const Image(
                                                   image: ResizeImage(
                                                 AssetImage('assets/images/helpbackground.PNG'),
                                                 width: 300,
                                                 height: 200,
                                               )),
                                               SizedBox(height: 20),
-                                             const  Text(
+                                              const Text(
                                                 "Success leaves clues.",
                                                 style: TextStyle(
                                                   color: Color.fromARGB(255, 193, 193, 194),
                                                 ),
                                               ),
                                               SizedBox(height: 5),
-                                              Text(
+                                              const Text(
                                                 "Study People you admire or want to be like.",
                                                 style: TextStyle(
                                                   color: Color.fromARGB(255, 193, 193, 194),

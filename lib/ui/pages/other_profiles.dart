@@ -96,9 +96,9 @@ class _OtherProfileState extends State<OtherProfile> {
 
   getValue() async {
     await followUnfollowController.IsFollow(Get.arguments["username"]);
-    Lesson lesson = await ApiProvider().getMyContributions();
-    otherProfilePageControllers.getLeson(lesson);
-    otherProfilePageControllers.getisloading(false);
+   
+   await  otherProfilePageControllers.getLeson(await ApiProvider().getMyContributions());
+   await  otherProfilePageControllers.getisloading(false);
   }
 
   Widget _container(String? title, String? description, LessonElement lesons) {
@@ -806,70 +806,65 @@ class _OtherProfileState extends State<OtherProfile> {
                                             }),
                               ),
                             ),
-                            otherProfilePageControllers.isloadings
+                            GetBuilder<otherProfilePageController>(
+                                          builder: (newController) => 
+                                          newController.isloadings
                                 ? const Center(
                                     child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                                   ))
-                                : Column(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(top: 40, left: 5, right: 25),
-                                        child: const Text(
-                                          "Contributed Lessons",
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                      ),
-                                      Stack(
-                                        children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              GetBuilder<otherProfilePageController>(
-                                                builder: (newController) => ListView.separated(
-                                                  scrollDirection: Axis.vertical,
-                                                  shrinkWrap: true,
-                                                  itemCount: newController.Lessons.lessons.length,
-                                                  itemBuilder: (context, index) {
-                                                    return _container(
-                                                      newController.Lessons.lessons[index]?.title.toString(),
-                                                      newController.Lessons.lessons[index]?.shortDescription.toString(),
-                                                      newController.Lessons.lessons[index]!,
-                                                    );
-                                                  },
-                                                  separatorBuilder: (context, index) {
-                                                    return const SizedBox(height: 20);
-                                                  },
-                                                ),
-                                              ),
-                                              const Image(
-                                                  image: ResizeImage(
-                                                AssetImage('assets/images/helpbackground.PNG'),
-                                                width: 300,
-                                                height: 200,
-                                              )),
-                                              SizedBox(height: 20),
-                                              const Text(
-                                                "Success leaves clues.",
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(255, 193, 193, 194),
-                                                ),
-                                              ),
-                                              SizedBox(height: 5),
-                                              const Text(
-                                                "Study People you admire or want to be like.",
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(255, 193, 193, 194),
-                                                ),
-                                              ),
-                                              SizedBox(height: 50),
-                                            ],
+                                : SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 40, left: 5, right: 25),
+                                          child: const Text(
+                                            "Contributed Lessons",
+                                            style: TextStyle(fontSize: 20),
                                           ),
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+                                        
+                                        ListView.separated(
+                                            physics:   NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: newController.Lessons.lessons.length,
+                                            itemBuilder: (context, index) {
+                                              return _container(
+                                                newController.Lessons.lessons[index]?.title.toString(),
+                                                newController.Lessons.lessons[index]?.shortDescription.toString(),
+                                                newController.Lessons.lessons[index]!,
+                                              );
+                                            },
+                                            separatorBuilder: (context, index) {
+                                              return const SizedBox(height: 20);
+                                            },
+                                          ),
+                                        const Image(
+                                            image: ResizeImage(
+                                          AssetImage('assets/images/helpbackground.PNG'),
+                                          width: 300,
+                                          height: 200,
+                                        )),
+                                        SizedBox(height: 20),
+                                        const Text(
+                                          "Success leaves clues.",
+                                          style: TextStyle(
+                                            color: Color.fromARGB(255, 193, 193, 194),
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        const Text(
+                                          "Study People you admire or want to be like.",
+                                          style: TextStyle(
+                                            color: Color.fromARGB(255, 193, 193, 194),
+                                          ),
+                                        ),
+                                        SizedBox(height: 50),
+                                      ],
+                                    ),
                                   ),
+                                        )
+                            
                           ],
                         ),
                       ),
